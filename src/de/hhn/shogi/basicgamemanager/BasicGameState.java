@@ -1,4 +1,4 @@
-package de.hhn.shogi.BasicGameManager;
+package de.hhn.shogi.basicgamemanager;
 
 public class BasicGameState {
     private String test;

@@ -1,4 +1,4 @@
-package de.hhn.shogi.BasicGameManager;
+package de.hhn.shogi.basicgamemanager;
 
 public abstract class TypeSerializer {
     protected abstract String serialize(Object object);

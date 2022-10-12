@@ -1,7 +1,7 @@
 package de.hhn.shogi;
 
-import de.hhn.shogi.BasicGameManager.BasicGameState;
-import de.hhn.shogi.BasicGameManager.BasicNetworkHelper;
+import de.hhn.shogi.basicgamemanager.BasicGameState;
+import de.hhn.shogi.basicgamemanager.BasicSerializer;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,6 +9,7 @@ public class Main {
 
         boolean test = RuleLogic.validMove(0, 0, 0, 0, Piece.BISHOP);
         System.out.println(test);
-        System.out.println(BasicNetworkHelper.serialize(new BasicGameState("test","test2")));
+        String serialized_test = (BasicSerializer.serialize(new BasicGameState("test","test2")));
+        BasicGameState basicGameState = BasicSerializer.deserialize(serialized_test);
     }
 }

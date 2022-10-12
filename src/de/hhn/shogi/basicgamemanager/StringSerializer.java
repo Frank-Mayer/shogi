@@ -1,4 +1,4 @@
-package de.hhn.shogi.BasicGameManager;
+package de.hhn.shogi.basicgamemanager;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
