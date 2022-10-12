@@ -55,7 +55,7 @@ public class BasicSerializer {
         }
         return basicGameState;
     }
-    private static String encode(String name,String val,String class_name){
+    protected static String encode(String name,String val,String class_name){
         return name+"=\""+class_name+":"+ val+"\"";
     }
 
@@ -67,9 +67,14 @@ public class BasicSerializer {
     protected static TypeSerializer getSerializer(String class_name) {
         if(serializers.isEmpty()){
             //registers all serializers
-            serializers.put(new StringSerializer().getType().getName(),new StringSerializer());
+            register_serializer(new StringSerializer());
+            register_serializer(new ArrayListSerializer());
+            register_serializer(new HashMapSerializer());
         }
         return serializers.getOrDefault(class_name,null);
+    }
+    private static void register_serializer(TypeSerializer serializer){
+        serializers.put(serializer.getType().getName(),serializer);
     }
 
 }

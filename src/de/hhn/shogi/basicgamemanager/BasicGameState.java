@@ -1,15 +1,19 @@
 package de.hhn.shogi.basicgamemanager;
 
-public class BasicGameState {
-    private String test;
-    private String test2;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-    public BasicGameState(String test, String test2) {
-        this.test = test;
-        this.test2 = test2;
-    }
+public class BasicGameState {
+    final private HashMap<String,ArrayList<String>> pices = new HashMap<>();
+    final private String test ="test4";
+
+
 
     public BasicGameState() {
 
+    }
+
+    public HashMap<String, ArrayList<String>> getPices() {
+        return pices;
     }
 }
