@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static de.hhn.shogi.basicgamemanager.BasicSerializer.*;
+import static de.hhn.shogi.basicgamemanager.BasicSerializer.encode;
+import static de.hhn.shogi.basicgamemanager.BasicSerializer.getSerializer;
 
 
 public class ArrayListSerializer extends TypeSerializer {
