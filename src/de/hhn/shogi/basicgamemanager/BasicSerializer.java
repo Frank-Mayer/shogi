@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BasicSerializer {
-    public static String serialize(BasicGameState basicGameState){
+    public static String serialize(Object someObject){
         StringBuilder builder = new StringBuilder();
-        Field[] field = basicGameState.getClass().getDeclaredFields();  //gets all fields in the BasicGameState class
+        Field[] field = someObject.getClass().getDeclaredFields();  //gets all fields in the BasicGameState class
         for (Field field1 : field) {
             try {
-                boolean access = field1.canAccess(basicGameState);
+                boolean access = field1.canAccess(someObject);
                 field1.setAccessible(true);
-                Object field_object = field1.get(basicGameState);   //gets the variable from the field
+                Object field_object = field1.get(someObject);   //gets the variable from the field
                 TypeSerializer typeSerializer = getSerializer(field_object);
                 if(typeSerializer!=null){
                     builder.append(encode(field1.getName(),typeSerializer.serialize(field_object),field_object.getClass().getName()));
@@ -26,9 +26,13 @@ public class BasicSerializer {
         return builder.toString();
     }
     public static BasicGameState deserialize(String serialized){
-        BasicGameState basicGameState = new BasicGameState();
+        return (BasicGameState) deserialize(serialized,BasicGameState.class.getName());
+    }
+    public static Object deserialize(String serialized,String class_name){
+        try {
+        Object object_obj=Class.forName(class_name).getDeclaredConstructor().newInstance();
         HashMap<String,Field> mapped_fields = new HashMap<>();
-        for (Field declaredField : basicGameState.getClass().getDeclaredFields()) {     //gets all fields in the BasicGameState class
+        for (Field declaredField : object_obj.getClass().getDeclaredFields()) {     //gets all fields in the BasicGameState/Objects class
             mapped_fields.put(declaredField.getName(),declaredField);
         }
         String[] vars_together = serialized.split("\"");
@@ -36,24 +40,28 @@ public class BasicSerializer {
         for (int i = 0; i < vars_together.length; i+=2) {
             mapped_vars.put(vars_together[i].substring(0,vars_together[i].length()-1), vars_together[i+1]);
         }
-
         for (Map.Entry<String, String> Entry : mapped_vars.entrySet()) {
             if(mapped_fields.containsKey(Entry.getKey())){
                 Field field = mapped_fields.get(Entry.getKey());
                 String mixed_value = Entry.getValue();
                 String type = mixed_value.split(":")[0];
                 String value = mixed_value.split(":")[1];
-                boolean accessible = field.canAccess(basicGameState);
+                boolean accessible = field.canAccess(object_obj);
                 field.setAccessible(true);
                 try {
-                    field.set(basicGameState,getSerializer(type).deserialize(value));
+                    field.set(object_obj,getSerializer(type).deserialize(value));
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
                 field.setAccessible(accessible);
             }
         }
-        return basicGameState;
+            return object_obj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
     protected static String encode(String name,String val,String class_name){
         return name+"=\""+class_name+":"+ val+"\"";
