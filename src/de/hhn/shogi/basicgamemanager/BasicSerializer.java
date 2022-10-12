@@ -7,7 +7,6 @@ import java.util.Map;
 public class BasicSerializer {
     public static String serialize(BasicGameState basicGameState){
         StringBuilder builder = new StringBuilder();
-        HashMap<String,String> variable_map=new HashMap<>(); // makes a hash map to store all the variables inside
         Field[] field = basicGameState.getClass().getDeclaredFields();  //gets all fields in the BasicGameState class
         for (Field field1 : field) {
             try {
@@ -16,13 +15,13 @@ public class BasicSerializer {
                 Object field_object = field1.get(basicGameState);   //gets the variable from the field
                 TypeSerializer typeSerializer = getSerializer(field_object);
                 if(typeSerializer!=null){
-                    variable_map.put(field1.getName(), typeSerializer.serialize(field_object));
+                    builder.append(encode(field1.getName(),typeSerializer.serialize(field_object),field_object.getClass().getName()));
+                }else{
+                    //TODO make some out debug output logger
+                    System.out.println(field1.getName()+" does have a registered Serializer");
                 }
                 field1.setAccessible(access);
             }catch (Exception ignored){}
-        }
-        for (Map.Entry<String, String> variable_map_entry : variable_map.entrySet()) { //not using stream because of performance
-            builder.append(encode(variable_map_entry.getKey(),variable_map_entry.getValue()));
         }
         return builder.toString();
     }
@@ -56,8 +55,8 @@ public class BasicSerializer {
         }
         return basicGameState;
     }
-    private static String encode(String name,String val){
-        return name+"=\""+val.getClass().getName()+":"+ val+"\"";
+    private static String encode(String name,String val,String class_name){
+        return name+"=\""+class_name+":"+ val+"\"";
     }
 
     private final static HashMap<String,TypeSerializer> serializers = new HashMap<>();
