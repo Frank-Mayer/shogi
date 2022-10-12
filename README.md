@@ -1,1 +1,1 @@
-# shogi repo
+# shogi repository
