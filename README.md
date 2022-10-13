@@ -4,7 +4,7 @@
 
 Im [Project](https://github.com/orgs/HHN-SEB-2022-23/projects/1) stehen die Aufgaben.
 
-Wer eine Aufgabe übernehmen möchte, stellt diese auf "In Progress" und trägt seinen Namen in die Beschreibung ein. Zum bearbeiten der Beschreibung auf den Text in der Karte klicken, dann bei der "description" auf "Edit".
+Wer eine Aufgabe übernehmen möchte, stellt diese auf "In Progress" und trägt seinen Namen in die Beschreibung ein. Zum bearbeiten der Beschreibung auf den Text in der Karte klicken dann bei der "description" auf "Edit".
 
 Du kannst dich an den Aufgaben von anderen beteiligen, dazu einfach mit der Person in Kontakt treten, die in dieser Aufgabe eingetragen ist.
 
@@ -12,15 +12,15 @@ Du kannst dich an den Aufgaben von anderen beteiligen, dazu einfach mit der Pers
 
 ## Zugriff auf den Code
 
-Die Seite auf der du dich aktuell befindest, ist ein Git Repository, welches auf GitHub gehostet ist. Git dient dazu das Zusammenarbeiten zu ermöglichen.
+Die Seite, auf der du dich aktuell befindest, ist ein Git Repository, welches auf GitHub gehostet ist. Git dient dazu, das Zusammenarbeiten zu ermöglichen.
 
-Um fortfahren zu können, musst du [Git](https://git-scm.com/downloads) installieren. Die Standardeinstellung sollten passen.
+Um fortfahren zu können, musst du [Git](https://git-scm.com/downloads) installieren. Die Standardeinstellungen sollten passen.
 
 Ich empfehle ein GUI-Tool, um den Git Code zu verwalten. Hier Beispiele:
 
-- [GitKraken](https://www.gitkraken.com) Kostenlose Version kann keine Privaten Repositiries verwalten. Kann alle Git Repositories, nicht nur GitHub. Pro version kostenlos mit [GitHub global Campus](https://education.github.com/globalcampus/student).
-- [GitHub Desktop](https://desktop.github.com) Nur für GitHub. Alle Features kostenlos.
-- In [IntelliJ](https://www.jetbrains.com/help/idea/commit-and-push-changes.html) und anderen IDEs sind GIT GUI-Tools integriert.
+- [GitKraken](https://www.gitkraken.com): Kostenlose Version kann keine Privaten Repositiries verwalten. Kann alle Git Repositories, nicht nur GitHub. Pro version kostenlos mit [GitHub global Campus](https://education.github.com/globalcampus/student).
+- [GitHub Desktop](https://desktop.github.com): Nur für GitHub. Alle Features kostenlos.
+- In [IntelliJ](https://www.jetbrains.com/help/idea/commit-and-push-changes.html) und anderen IDEs sind Git GUI-Tools integriert.
 
 ### Clone
 
@@ -42,4 +42,4 @@ Wenn jemand eine Änderung Pusht, musst du diese manuell pullen. Dazu verwendest
 
 Bevor du anfängst zu arbeiten und bevor du deine Änderungen auf GitHub pushst, **immer** zuerst neue Änderungen pullen.
 
-Wenn zwei Leute gleichzeitig eine Änderung in der selben Zeile committen, gibt das einen Konflikt. Wer nicht weiß was zu tun ist, einfach melden :D
+Wenn zwei Leute gleichzeitig eine Änderung in derselben Zeile committen, gibt das einen Konflikt. Wer nicht weiß, was zu tun ist, einfach melden :D
