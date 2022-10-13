@@ -1,6 +1,6 @@
-package de.hhn.shogi;
+package de.hhn.shogi.gamelogic;
 
-public enum Piece {
+public enum PieceType {
 
     BISHOP,
     GOLD_GENERAL,
