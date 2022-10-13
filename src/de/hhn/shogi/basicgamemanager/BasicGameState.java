@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BasicGameState {
-    final private HashMap<String,ArrayList<String>> pices = new HashMap<>();
+    final private HashMap<String,ArrayList<String>> piece = new HashMap<>();
     final private String test ="test4";
 
 
@@ -13,7 +13,7 @@ public class BasicGameState {
 
     }
 
-    public HashMap<String, ArrayList<String>> getPices() {
-        return pices;
+    public HashMap<String, ArrayList<String>> getPieces() {
+        return piece;
     }
 }

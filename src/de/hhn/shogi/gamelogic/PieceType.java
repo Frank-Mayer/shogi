@@ -1,7 +1,6 @@
 package de.hhn.shogi.gamelogic;
 
 public enum PieceType {
-
     BISHOP,
     GOLD_GENERAL,
     KING,
@@ -10,6 +9,4 @@ public enum PieceType {
     PAWN,
     ROOK,
     SILVER_GENERAL
-
-
 }

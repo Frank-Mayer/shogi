@@ -15,7 +15,7 @@ public class Main {
         boolean test = RuleLogic.validMove(0, 0, 0, 0, PieceType.BISHOP);
         System.out.println(test);
         BasicGameState basicGameState = new BasicGameState();
-        basicGameState.getPices().put("pice",new ArrayList<>(List.of(new String[]{"warum auch nicht"})));
+        basicGameState.getPieces().put("piece",new ArrayList<>(List.of(new String[]{"warum auch nicht"})));
         String serialized_test = (BasicSerializer.serialize(basicGameState));
         basicGameState = BasicSerializer.deserialize(serialized_test);
     }
