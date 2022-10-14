@@ -8,6 +8,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
         Window window = new Window();
+        window.setVisible(true);
+
         boolean test = RuleLogic.validMove(0, 0, 0, 0, PieceType.BISHOP);
         System.out.println(test);
 //        BasicGameState basicGameState = new BasicGameState();
