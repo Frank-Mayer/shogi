@@ -1,13 +1,8 @@
 package de.hhn.shogi;
 
-import de.hhn.shogi.basicgamemanager.BasicGameState;
-import de.hhn.shogi.basicgamemanager.BasicSerializer;
 import de.hhn.shogi.frontend.Window;
-import de.hhn.shogi.gamelogic.PieceType;
+import de.hhn.shogi.gamelogic.util.PieceType;
 import de.hhn.shogi.gamelogic.RuleLogic;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {

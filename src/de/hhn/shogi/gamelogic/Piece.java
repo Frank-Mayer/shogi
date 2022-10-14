@@ -1,5 +1,8 @@
 package de.hhn.shogi.gamelogic;
 
+import de.hhn.shogi.gamelogic.util.BoardSide;
+import de.hhn.shogi.gamelogic.util.PieceType;
+
 public class Piece {
     // Current type important for gameLogic
     private PieceType type;
@@ -7,9 +10,12 @@ public class Piece {
     private PieceType baseType;
     // Is Piece in promoted state. Important for frontend
     private boolean promoted;
+    // Side of Board
+    private BoardSide side;
 
-    public Piece(PieceType type) {
+    public Piece(PieceType type, BoardSide side) {
         this.type = this.baseType = type;
+        this.side = side;
     }
 
     // Returns current Type for Logic
@@ -25,6 +31,11 @@ public class Piece {
     // Returns true when the Piece is Promoted
     public boolean isPromoted() {
         return promoted;
+    }
+
+    // Returns which Side owns this Piece
+    public BoardSide getSide() {
+        return side;
     }
 
     //Tries to promote the Piece. Returns whether the promotion was done successfully.

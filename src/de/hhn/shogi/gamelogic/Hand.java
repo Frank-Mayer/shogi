@@ -1,7 +1,8 @@
 package de.hhn.shogi.gamelogic;
 
+import de.hhn.shogi.gamelogic.util.PieceType;
+
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Hand {
     // Represents all the Pieces this Hand holds

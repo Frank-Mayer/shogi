@@ -1,4 +1,4 @@
-package de.hhn.shogi.gamelogic;
+package de.hhn.shogi.gamelogic.util;
 
 public enum PieceType {
     BISHOP,
