@@ -1,7 +1,7 @@
 package de.hhn.shogi;
 
 import de.hhn.shogi.frontend.Window;
-import de.hhn.shogi.gamelogic.PieceType;
+import de.hhn.shogi.gamelogic.util.PieceType;
 import de.hhn.shogi.gamelogic.RuleLogic;
 
 public class Main {

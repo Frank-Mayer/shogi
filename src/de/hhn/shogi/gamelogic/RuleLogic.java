@@ -1,6 +1,8 @@
 package de.hhn.shogi.gamelogic;
 
 
+import de.hhn.shogi.gamelogic.util.PieceType;
+
 public class RuleLogic {
 
     public RuleLogic() {
