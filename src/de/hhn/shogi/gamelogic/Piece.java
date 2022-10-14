@@ -8,6 +8,10 @@ public class Piece {
     // Is Piece in promoted state. Important for frontend
     private boolean promoted;
 
+    public Piece(PieceType type) {
+        this.type = this.baseType = type;
+    }
+
     // Returns current Type for Logic
     public PieceType getType() {
         return type;
