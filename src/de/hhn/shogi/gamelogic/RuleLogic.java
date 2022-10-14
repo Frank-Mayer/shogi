@@ -12,6 +12,7 @@ public class RuleLogic {
         if (xOffset == 0 && yOffset == 0) {
             return false;
         }
+        //TODO check if other pieces are in the way
         switch (pieceType) {
             case BISHOP:
                 // A bishop (角) moves any number of squares in a diagonal direction.
