@@ -1,10 +1,12 @@
 package de.hhn.shogi.gamelogic.util;
 
 public class Vec2 {
-    private final int X;
-    private final int Y;
+    private int X;
+    private int Y;
 
     public Vec2 (int x, int y) {
+        if (x < 0 || x > 8 || y < 0 || y > 8)
+            throw new IllegalArgumentException("Coordinate is out of bounds");
         this.X = x;
         this.Y = y;
     }
@@ -44,6 +46,11 @@ public class Vec2 {
         if (obj instanceof Vec2 vec2)
             return vec2.getX() == X && vec2.getY() == Y;
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Y * 9 + X;
     }
 
     // Return true if the name is valid like "C2" or "a9"
