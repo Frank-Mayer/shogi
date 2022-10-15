@@ -79,6 +79,9 @@ public class BasicSerializer {
             register_serializer(new ArrayListSerializer());
             register_serializer(new HashMapSerializer());
             register_serializer(new BoolSerializer());
+            register_serializer(new IntSerializer());
+            register_serializer(new FloatSerializer());
+            register_serializer(new LongSerializer());
         }
         return serializers.getOrDefault(class_name,null);
     }
