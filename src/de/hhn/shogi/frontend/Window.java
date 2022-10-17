@@ -20,7 +20,7 @@ public class Window extends JFrame {
         //test text
         text.setForeground(Color.WHITE);
         text.setFont(new Font("Arial Black", Font.PLAIN, 15));
-        add(text);
+        getContentPane().add(text);
 
         //adds board
 //        boardImg.setIcon(new ImageIcon("src/de/hhn/shogi/frontend/board.png"));

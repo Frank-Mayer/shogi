@@ -1,16 +1,19 @@
 package de.hhn.shogi.gamelogic;
 
 
+import de.hhn.shogi.gamelogic.util.BoardSide;
 import de.hhn.shogi.gamelogic.util.PieceType;
+import de.hhn.shogi.gamelogic.util.Vec2;
 
 public class RuleLogic {
 
     public RuleLogic() {
     }
 
-    public static boolean validMove(int x1, int y1, int x2, int y2, PieceType pieceType) {
-        int xOffset = x2 - x1;
-        int yOffset = y2 - y1;
+    public static boolean validMove(Vec2 from, Vec2 to, PieceType pieceType, boolean facingUp) {
+        int xOffset = Vec2.xDiff(from, to);
+        int yOffset = Vec2.yDiff(from, to);
+        if(!facingUp) yOffset *= -1;
         if (xOffset == 0 && yOffset == 0) {
             return false;
         }
