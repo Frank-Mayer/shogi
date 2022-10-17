@@ -30,6 +30,30 @@ public class Board {
         resetBoard(handicap);
     }
 
+    public boolean occupied(Vec2 position) {
+        return map.containsKey(position);
+    }
+
+    // Get the Piece of Position and null if empty.
+    public Piece getPiece(Vec2 position) {
+        return map.get(position);
+    }
+
+    // Moves Piece from one position to another. Returns a Piece if target was occupied.
+    public Piece move(Vec2 from, Vec2 to) {
+        Piece returnPiece = null;
+        if (!occupied(from))
+            throw new IllegalArgumentException("Moving Piece does not exist");
+        Piece movingPiece = getPiece(from);
+        if (!RuleLogic.validMove(from, to, movingPiece.getType(), movingPiece.getSide() == bottomSide))
+            throw new IllegalArgumentException("Move is Illegal");
+        if (occupied(to))
+            returnPiece = getPiece(to);
+        map.put(to, movingPiece);
+        map.remove(from);
+        return returnPiece;
+    }
+
     @Deprecated
     public HashMap<Vec2, Piece> getMap(){
         return map;
