@@ -16,7 +16,8 @@ public class DisplayPiece extends JPanel {
 
 
     public void draw(Graphics g, int width, int height) {
-        g.setColor(Color.BLACK);
+
+        g.setColor(new Color(0, 0, 0, 100));
         g.fillRect(x * 75 + (width / 2 - BOARD_SIZE / 2) + 37,y * 75 + (height / 2 - BOARD_SIZE / 2) + 37,75,75);
     }
 }

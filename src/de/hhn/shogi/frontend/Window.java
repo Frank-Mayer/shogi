@@ -46,11 +46,13 @@ public class Window extends JFrame {
         ImageIcon ic = new ImageIcon("src/de/hhn/shogi/frontend/images/board.png");
         g.drawImage(ic.getImage(), (getWidth() / 2) - (BOARD_SIZE / 2), (getHeight() / 2) - (BOARD_SIZE / 2), ic.getImageObserver());
 
+        //display all pieces
         for (DisplayPiece d : displayPieces) {
             d.draw(g, getWidth(), getHeight());
         }
     }
 
+    //makes a displayPiece for every piece
     public void drawPieces(HashMap<Vec2, Piece> pieces) {
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
