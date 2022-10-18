@@ -1,5 +1,6 @@
 package de.hhn.shogi.gamelogic;
 
+import de.hhn.shogi.frontend.Window;
 import de.hhn.shogi.gamelogic.util.BoardSide;
 import de.hhn.shogi.gamelogic.util.PieceType;
 import de.hhn.shogi.gamelogic.util.Vec2;
@@ -17,10 +18,11 @@ public class Board {
     public static final BoardSide HANDICAPPED_SIDE = BoardSide.GOTE;
 
     // Creates a new Board and fills it with Pieces
-    public Board(BoardSide side) {
+    public Board(BoardSide side, Window window) {
         init(side);
         resetBoard(0);
-    }
+        window.drawPieces(map);
+     }
 
     // Creates a new Board and fills it with Pieces according to the handicap level
     public Board(BoardSide side, int handicap) {

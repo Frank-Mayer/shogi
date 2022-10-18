@@ -1,8 +1,10 @@
 package de.hhn.shogi;
 
 import de.hhn.shogi.frontend.Window;
-import de.hhn.shogi.gamelogic.util.PieceType;
+import de.hhn.shogi.gamelogic.Game;
 import de.hhn.shogi.gamelogic.RuleLogic;
+import de.hhn.shogi.gamelogic.util.BoardSide;
+import de.hhn.shogi.gamelogic.util.PieceType;
 import de.hhn.shogi.gamelogic.util.Vec2;
 
 public class Main {
@@ -10,8 +12,9 @@ public class Main {
         System.out.println("Hello world!");
         Window window = new Window();
         window.setVisible(true);
+        Game game = new Game(BoardSide.GOTE, window);
 
-        boolean test = RuleLogic.validMove(new Vec2("A1"),new Vec2("B2"), PieceType.BISHOP, true);
+        boolean test = RuleLogic.validMove(new Vec2("A1"), new Vec2("B2"), PieceType.BISHOP, true);
         System.out.println(test);
 //        BasicGameState basicGameState = new BasicGameState();
 //        basicGameState.getPieces().put("piece",new ArrayList<>(List.of(new String[]{"warum auch nicht"})));
