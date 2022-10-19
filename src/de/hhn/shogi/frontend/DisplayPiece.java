@@ -25,12 +25,17 @@ public class DisplayPiece extends JPanel {
 
 
     public void draw(Graphics g, int width, int height) {
-        g.setColor(new Color(0, 0, 0, 50));
-        g.fillRect(x * 75 + (width / 2 - BOARD_SIZE / 2) + 37,(8 - y) * 75 + (height / 2 - BOARD_SIZE / 2) + 37,75,75);
+        // calculate position on the screen from shogi coordinates
+        int translatedX = x * 75 + (width / 2 - BOARD_SIZE / 2) + 37;
+        int translatedY = (8 - y) * 75 + (height / 2 - BOARD_SIZE / 2) + 37;
 
-        String imgName;
+        //shading
+        g.setColor(new Color(0, 0, 0, 50));
+        g.fillRect(translatedX, translatedY,75,75);
+
 
         //select image based on PieceType
+        String imgName;
         switch (type) {
             default -> imgName = "TurmV2.png";
             case BISHOP -> imgName = "bishop.png";
@@ -39,15 +44,15 @@ public class DisplayPiece extends JPanel {
         }
 
 
-        //draw image (rotated if top side)
+        //draw image (rotated if top side (does not work))
       Graphics2D g2d = (Graphics2D)g;
         if (side == BoardSide.SENTE) {
             ImageIcon ic = new ImageIcon("src/de/hhn/shogi/frontend/images/" + imgName);
             g2d.rotate(Math.PI);
-            g2d.drawImage(ic.getImage(), x * 75 + (width / 2 - BOARD_SIZE / 2) + 37, (8 - y) * 75 + (height / 2 - BOARD_SIZE / 2) + 37 , ic.getImageObserver());
+            g2d.drawImage(ic.getImage(), translatedX, translatedY , ic.getImageObserver());
         }else{
             ImageIcon ic = new ImageIcon("src/de/hhn/shogi/frontend/images/" + imgName);
-            g.drawImage(ic.getImage(), x * 75 + (width / 2 - BOARD_SIZE / 2) + 37, (8 - y) * 75 + (height / 2 - BOARD_SIZE / 2) + 37, ic.getImageObserver());
+            g.drawImage(ic.getImage(), translatedX, translatedY, ic.getImageObserver());
         }
     }
 }
