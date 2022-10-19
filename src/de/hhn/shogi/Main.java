@@ -19,6 +19,6 @@ public class Main {
 //        BasicGameState basicGameState = new BasicGameState();
 //        basicGameState.getPieces().put("piece",new ArrayList<>(List.of(new String[]{"warum auch nicht"})));
 //        String serialized_test = (BasicSerializer.serialize(basicGameState));
-//        basicGameState = BasicSerializer.deserialize(serialized_test);
+//        basicGameState = BasicSerializer.deserialize(basicGameState.getClass(),serialized_test);
     }
 }
