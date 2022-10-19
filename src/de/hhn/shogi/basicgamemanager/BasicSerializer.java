@@ -25,9 +25,18 @@ public class BasicSerializer {
         }
         return builder.toString();
     }
-    public static BasicGameState deserialize(String serialized){
-        return (BasicGameState) deserialize(serialized,BasicGameState.class.getName());
+    // only good for static context objects since otherwise you have to create a new object of the class that would be discarded
+    @SuppressWarnings("unchecked")
+    public static <T> T deserialize(T object,String serialised) {
+        return (T) deserialize(serialised, object.getClass().getName());
     }
+    //better for non-static context since you just have to go .getClass()
+    //or use this.getClass() in a static context
+    @SuppressWarnings("unchecked")
+    public static <T> T deserialize(Class<T> _class, String serialised) {
+        return (T) deserialize(serialised, _class.getName());
+    }
+
     public static Object deserialize(String serialized,String class_name){
         try {
         Object object_obj=Class.forName(class_name).getDeclaredConstructor().newInstance();
