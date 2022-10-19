@@ -58,7 +58,8 @@ public class Window extends JFrame {
             for (int y = 0; y < 9; y++) {
                 Piece piece = pieces.get(new Vec2(x, y));
                 if (piece != null) {
-                    DisplayPiece d = new DisplayPiece(x, y);
+
+                    DisplayPiece d = new DisplayPiece(x, y, piece);
                     displayPieces.add(d);
                     getContentPane().add(d);
                 }
