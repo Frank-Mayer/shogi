@@ -13,7 +13,7 @@ public class Window extends JFrame {
     JLabel title = new JLabel();
     JLabel hand = new JLabel();
     public static final int BOARD_SIZE = 750;
-    List<DisplayPiece> displayPieces = new ArrayList<>();
+    List<FieldButton> displayPieces = new ArrayList<>();
 
     public Window() {
         //window settings
@@ -47,7 +47,7 @@ public class Window extends JFrame {
         g.drawImage(ic.getImage(), (getWidth() / 2) - (BOARD_SIZE / 2), (getHeight() / 2) - (BOARD_SIZE / 2), ic.getImageObserver());
 
         //display all pieces
-        for (DisplayPiece d : displayPieces) {
+        for (FieldButton d : displayPieces) {
             d.draw(g, getWidth(), getHeight());
         }
     }
@@ -59,7 +59,7 @@ public class Window extends JFrame {
                 Piece piece = pieces.get(new Vec2(x, y));
                 if (piece != null) {
 
-                    DisplayPiece d = new DisplayPiece(x, y, piece);
+                    FieldButton d = new FieldButton(x, y, piece);
                     displayPieces.add(d);
                     getContentPane().add(d);
                 }

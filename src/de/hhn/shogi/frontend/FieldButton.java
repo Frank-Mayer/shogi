@@ -6,17 +6,16 @@ import de.hhn.shogi.gamelogic.util.PieceType;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 import static de.hhn.shogi.frontend.Window.BOARD_SIZE;
 
-public class DisplayPiece extends JPanel {
+public class FieldButton extends JPanel {
     private int x;
     private int y;
     private PieceType type;
     private BoardSide side;
 
-    public DisplayPiece(int x, int y, Piece piece) {
+    public FieldButton(int x, int y, Piece piece) {
         this.x = x;
         this.y = y;
         type = piece.getType();

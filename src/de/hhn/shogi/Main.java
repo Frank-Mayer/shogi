@@ -14,6 +14,7 @@ public class Main {
         window.setVisible(true);
         Game game = new Game(BoardSide.GOTE, window);
 
+
         boolean test = RuleLogic.validMove(new Vec2("A1"), new Vec2("B2"), PieceType.BISHOP, true);
         System.out.println(test);
 //        BasicGameState basicGameState = new BasicGameState();
