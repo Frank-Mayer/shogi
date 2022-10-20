@@ -20,7 +20,7 @@ public class Board {
     // Creates a new Board and fills it with Pieces
     public Board(BoardSide side) {
         init(side);
-        resetBoard(4);
+        resetBoard(0);
      }
 
     // Creates a new Board and fills it with Pieces according to the handicap level

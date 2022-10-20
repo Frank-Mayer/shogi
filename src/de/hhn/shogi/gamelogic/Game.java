@@ -14,7 +14,7 @@ public class Game {
         BoardSide otherSide = bottomSide == BoardSide.SENTE ? BoardSide.GOTE : BoardSide.SENTE;
         topPlayer = new Player(otherSide);
         //make window
-        Window window = new Window(board);
+        Window window = new Window(board, bottomPlayer.getHand());
         window.setVisible(true);
     }
 }

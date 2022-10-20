@@ -9,12 +9,11 @@ import de.hhn.shogi.gamelogic.util.Vec2;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
         Game game = new Game(BoardSide.GOTE);
 
 
-        boolean test = RuleLogic.validMove(new Vec2("A1"), new Vec2("B2"), PieceType.BISHOP, true);
-        System.out.println(test);
+//        boolean test = RuleLogic.validMove(new Vec2("A1"), new Vec2("B2"), PieceType.BISHOP, true);
+//        System.out.println(test);
 //        BasicGameState basicGameState = new BasicGameState();
 //        basicGameState.getPieces().put("piece",new ArrayList<>(List.of(new String[]{"warum auch nicht"})));
 //        String serialized_test = (BasicSerializer.serialize(basicGameState));

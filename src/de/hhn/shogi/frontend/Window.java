@@ -1,6 +1,7 @@
 package de.hhn.shogi.frontend;
 
 import de.hhn.shogi.gamelogic.Board;
+import de.hhn.shogi.gamelogic.Hand;
 import de.hhn.shogi.gamelogic.Piece;
 import de.hhn.shogi.gamelogic.util.Vec2;
 
@@ -18,7 +19,7 @@ public class Window extends JFrame {
     Map<Vec2, FieldButton> fieldButtons = new HashMap<>();
     Board board;
 
-    public Window(Board board) {
+    public Window(Board board, Hand hand) {
         this.board = board;
         //window settings
         setTitle("Shogi");
@@ -35,11 +36,6 @@ public class Window extends JFrame {
         title.setHorizontalAlignment(JLabel.CENTER);
         getContentPane().add(title);
 
-        //hand rect
-//        hand.setBackground(new Color(55, 45, 55));
-//        hand.setBounds(50, 50, BOARD_SIZE / 2, BOARD_SIZE);
-//        getContentPane().add(hand);
-
 
         //makes a FieldButton for every position
         for (int x = 0; x < 9; x++) {
@@ -47,14 +43,19 @@ public class Window extends JFrame {
                 Vec2 pos = new Vec2(x, y);
                 FieldButton button;
                 if (board.occupied(pos)) {
-                    button = new FieldButton(pos, board.getPiece(pos));
+                    button = new FieldButton(pos, board.getPiece(pos), this);
                 } else {
-                    button = new FieldButton(pos, null);
+                    button = new FieldButton(pos, null, this);
                 }
                 fieldButtons.put(pos, button);
                 getContentPane().add(button);
             }
         }
+//        board.getPiece(new Vec2("B2")).promote();
+
+
+        //hand
+        new DisplayHand(this, hand);
     }
 
 
@@ -68,7 +69,7 @@ public class Window extends JFrame {
 
         //display all pieces
         for (FieldButton d : fieldButtons.values()) {
-            d.draw(g, getWidth(), getHeight());
+            d.paint(g);
         }
     }
 }

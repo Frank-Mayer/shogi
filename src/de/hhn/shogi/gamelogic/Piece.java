@@ -47,6 +47,7 @@ public class Piece {
             case ROOK -> PieceType.DRAGON;
             case BISHOP -> PieceType.HORSE;
         };
+        promoted = true;
         return true;
     }
 
