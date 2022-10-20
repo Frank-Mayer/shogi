@@ -10,9 +10,7 @@ import de.hhn.shogi.gamelogic.util.Vec2;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
-        Window window = new Window();
-        window.setVisible(true);
-        Game game = new Game(BoardSide.GOTE, window);
+        Game game = new Game(BoardSide.GOTE);
 
 
         boolean test = RuleLogic.validMove(new Vec2("A1"), new Vec2("B2"), PieceType.BISHOP, true);

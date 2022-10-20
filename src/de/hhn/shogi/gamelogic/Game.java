@@ -8,10 +8,13 @@ public class Game {
     public Player bottomPlayer;
     public Player topPlayer;
 
-    public Game(BoardSide bottomSide, Window window) {
-        board = new Board(bottomSide, window);
+    public Game(BoardSide bottomSide) {
+        board = new Board(bottomSide);
         bottomPlayer = new Player(bottomSide);
         BoardSide otherSide = bottomSide == BoardSide.SENTE ? BoardSide.GOTE : BoardSide.SENTE;
         topPlayer = new Player(otherSide);
+        //make window
+        Window window = new Window(board);
+        window.setVisible(true);
     }
 }

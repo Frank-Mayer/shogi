@@ -1,5 +1,6 @@
 package de.hhn.shogi.frontend;
 
+import de.hhn.shogi.gamelogic.Board;
 import de.hhn.shogi.gamelogic.Piece;
 import de.hhn.shogi.gamelogic.util.Vec2;
 
@@ -8,14 +9,17 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Window extends JFrame {
     JLabel title = new JLabel();
-    JLabel hand = new JLabel();
+    //JLabel hand = new JLabel();
     public static final int BOARD_SIZE = 750;
-    List<FieldButton> displayPieces = new ArrayList<>();
+    Map<Vec2, FieldButton> fieldButtons = new HashMap<>();
+    Board board;
 
-    public Window() {
+    public Window(Board board) {
+        this.board = board;
         //window settings
         setTitle("Shogi");
         setSize(1000, 1000);
@@ -32,11 +36,27 @@ public class Window extends JFrame {
         getContentPane().add(title);
 
         //hand rect
-        hand.setBackground(new Color(55, 45, 55));
-        hand.setBounds(50, 50, BOARD_SIZE / 2, BOARD_SIZE);
+//        hand.setBackground(new Color(55, 45, 55));
+//        hand.setBounds(50, 50, BOARD_SIZE / 2, BOARD_SIZE);
+//        getContentPane().add(hand);
 
-        getContentPane().add(hand);
+
+        //makes a FieldButton for every position
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                Vec2 pos = new Vec2(x, y);
+                FieldButton button;
+                if (board.occupied(pos)) {
+                    button = new FieldButton(pos, board.getPiece(pos));
+                } else {
+                    button = new FieldButton(pos, null);
+                }
+                fieldButtons.put(pos, button);
+                getContentPane().add(button);
+            }
+        }
     }
+
 
     public void paint(Graphics g) {
         super.paint(g);
@@ -47,23 +67,8 @@ public class Window extends JFrame {
         g.drawImage(ic.getImage(), (getWidth() / 2) - (BOARD_SIZE / 2), (getHeight() / 2) - (BOARD_SIZE / 2), ic.getImageObserver());
 
         //display all pieces
-        for (FieldButton d : displayPieces) {
+        for (FieldButton d : fieldButtons.values()) {
             d.draw(g, getWidth(), getHeight());
-        }
-    }
-
-    //makes a displayPiece for every piece
-    public void drawPieces(HashMap<Vec2, Piece> pieces) {
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
-                Piece piece = pieces.get(new Vec2(x, y));
-                if (piece != null) {
-
-                    FieldButton d = new FieldButton(x, y, piece);
-                    displayPieces.add(d);
-                    getContentPane().add(d);
-                }
-            }
         }
     }
 }

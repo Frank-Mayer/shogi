@@ -18,10 +18,9 @@ public class Board {
     public static final BoardSide HANDICAPPED_SIDE = BoardSide.GOTE;
 
     // Creates a new Board and fills it with Pieces
-    public Board(BoardSide side, Window window) {
+    public Board(BoardSide side) {
         init(side);
-        resetBoard(0);
-        window.drawPieces(map);
+        resetBoard(4);
      }
 
     // Creates a new Board and fills it with Pieces according to the handicap level
