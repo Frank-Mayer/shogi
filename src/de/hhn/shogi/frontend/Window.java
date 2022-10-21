@@ -26,8 +26,8 @@ public class Window extends JFrame {
         this.bottom = player.getSide();
         //window settings
         setTitle("Shogi");
-        setSize(1000, 1000);
         setExtendedState(MAXIMIZED_BOTH);
+        setSize(1300, 1000);
         setLayout(null);
         getContentPane().setBackground(new Color(50, 40, 50));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

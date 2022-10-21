@@ -26,8 +26,8 @@ public class FieldButton extends JButton {
         window = w;
 
         //init button
-        translatedX = pos.getX() * 75 + (window.getWidth() / 2 - BOARD_SIZE / 2) + 37;
-        translatedY = (8 - pos.getY()) * 75 + (window.getHeight() / 2 - BOARD_SIZE / 2) + 37;
+        translatedX = limit(pos.getX() * 75 + (window.getWidth() / 2 - BOARD_SIZE / 2) + 37, 0, window.getWidth());
+        translatedY = limit((8 - pos.getY()) * 75 + (window.getHeight() / 2 - BOARD_SIZE / 2) + 37, 0, window.getHeight());
         setContentAreaFilled(false);
         setBounds(translatedX, translatedY, 75, 75);
         setBorderPainted(false);
@@ -49,8 +49,8 @@ public class FieldButton extends JButton {
     public void paint(Graphics g) {
         super.paint(g);
         // calculate position on the screen from shogi coordinates
-        translatedX = pos.getX() * 75 + (window.getWidth() / 2 - BOARD_SIZE / 2) + 37;
-        translatedY = (8 - pos.getY()) * 75 + (window.getHeight() / 2 - BOARD_SIZE / 2) + 37;
+        translatedX = limit(pos.getX() * 75 + (window.getWidth() / 2 - BOARD_SIZE / 2) + 37, 0, window.getWidth());
+        translatedY = limit((8 - pos.getY()) * 75 + (window.getHeight() / 2 - BOARD_SIZE / 2) + 37, 0, window.getHeight());
         this.setBounds(translatedX, translatedY, 75, 75);
 
         //paint piece if Piece is not null
@@ -109,5 +109,9 @@ public class FieldButton extends JButton {
             case KING -> "king.png";
             case ROOK, DRAGON -> "rook.png";
         };
+    }
+
+   private int limit(int value, int min, int max) {
+        return Math.min(Math.max(value, min), max);
     }
 }
