@@ -115,10 +115,10 @@ public class Board {
             createPiece(8, 0, PieceType.LANCE, bottomSide);
         }
         if (handicap != 1 && handicap != 4 && handicap < 6 || otherSide != HANDICAPPED_SIDE) {
-            createPiece(8, 8, PieceType.LANCE, bottomSide);
+            createPiece(8, 8, PieceType.LANCE, otherSide);
         }
         if (handicap < 6 || otherSide != HANDICAPPED_SIDE) {
-            createPiece(0, 8, PieceType.LANCE, bottomSide);
+            createPiece(0, 8, PieceType.LANCE, otherSide);
         }
     }
 

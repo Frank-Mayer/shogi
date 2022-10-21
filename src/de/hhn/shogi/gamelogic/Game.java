@@ -5,9 +5,9 @@ import de.hhn.shogi.gamelogic.state.StateManager;
 import de.hhn.shogi.gamelogic.util.BoardSide;
 
 public class Game {
-    public Board board;
-    public Player bottomPlayer;
-    public Player topPlayer;
+    private Board board;
+    private Player bottomPlayer;
+    private Player topPlayer;
     private StateManager state;
 
     public static Game ACTIVE_GAME;
