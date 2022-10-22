@@ -1,17 +1,13 @@
 package de.hhn.shogi.frontend;
 
 import de.hhn.shogi.gamelogic.Board;
-import de.hhn.shogi.gamelogic.Hand;
-import de.hhn.shogi.gamelogic.Piece;
 import de.hhn.shogi.gamelogic.Player;
 import de.hhn.shogi.gamelogic.util.BoardSide;
 import de.hhn.shogi.gamelogic.util.Vec2;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Window extends JFrame {

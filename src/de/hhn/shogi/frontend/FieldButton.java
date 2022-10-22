@@ -1,8 +1,7 @@
 package de.hhn.shogi.frontend;
 
 import de.hhn.shogi.gamelogic.Piece;
-import de.hhn.shogi.gamelogic.util.BoardSide;
-import de.hhn.shogi.gamelogic.util.PieceType;
+import de.hhn.shogi.gamelogic.state.StateManager;
 import de.hhn.shogi.gamelogic.util.Vec2;
 
 import javax.swing.*;
@@ -35,12 +34,20 @@ public class FieldButton extends JButton {
 
         //paint border if hovered over
         addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent evt) {
+            @Override
+            public void mouseEntered(MouseEvent e) {
                 hovering = true;
             }
-
-            public void mouseExited(MouseEvent evt) {
+            @Override
+            public void mouseExited(MouseEvent e) {
                 hovering = false;
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if(hovering) {
+                    System.out.println(pos);
+                    StateManager.fieldClick(pos);
+                }
             }
         });
     }
@@ -57,7 +64,7 @@ public class FieldButton extends JButton {
         if (piece != null) {
             setIcon(getImg(getPathName(), hovering));
         } else {
-            setIcon(getHoverEffect());
+           // setIcon(getHoverEffect());
         }
     }
 
@@ -111,7 +118,7 @@ public class FieldButton extends JButton {
         };
     }
 
-   private int limit(int value, int min, int max) {
+    private int limit(int value, int min, int max) {
         return Math.min(Math.max(value, min), max);
     }
 }

@@ -73,4 +73,9 @@ public class Vec2 {
     public static int yDiff(Vec2 start, Vec2 finish) {
         return finish.getY() - start.getY();
     }
+
+    @Override
+    public String toString() {
+        return getName().toUpperCase();
+    }
 }
