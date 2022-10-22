@@ -1,13 +1,14 @@
 package de.hhn.shogi.frontend;
 
 import de.hhn.shogi.gamelogic.Piece;
-import de.hhn.shogi.gamelogic.state.StateManager;
+import de.hhn.shogi.gamelogic.RuleLogic;
 import de.hhn.shogi.gamelogic.util.Vec2;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -37,33 +38,9 @@ public class FieldButton extends JButton {
         window.add(this, 0);
 
         //paint border if hovered over
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                hovering = true;
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                hovering = false;
-                mousePressed = false;
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                mousePressed = true;
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (mousePressed) {
-                    System.out.println(pos);
-                    // new StateManager().fieldClick(pos);
-                }
-                mousePressed = false;
-            }
-        });
+        addMouseListener(mouseListener());
     }
+
 
     @Override
     public void paint(Graphics g) {
@@ -145,6 +122,51 @@ public class FieldButton extends JButton {
             case BISHOP, HORSE -> "bishop.png";
             case KING -> "king.png";
             case ROOK, DRAGON -> "rook.png";
+        };
+    }
+
+    private MouseListener mouseListener() {
+        return new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                hovering = true;
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                hovering = false;
+                mousePressed = false;
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mousePressed = true;
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (mousePressed) {
+                    System.out.println(pos);
+
+                    ////////////test code
+                    if (piece != null) {
+                        ArrayList<Vec2> possibleMoves = new ArrayList<>();
+                        for (int x = 0; x < 9; x++) {
+                            for (int y = 0; y < 9; y++) {
+                                Vec2 testPos = new Vec2(x, y);
+                                if (RuleLogic.validMove(pos, testPos, piece.getType(), piece.getSide().equals(window.bottom))) {
+                                    possibleMoves.add(testPos);
+                                }
+                            }
+                        }
+                        window.displayPossibleMoves(possibleMoves, true);
+                    }
+                    ////////////
+
+                    // new StateManager().fieldClick(pos);
+                }
+                mousePressed = false;
+            }
         };
     }
 
