@@ -3,9 +3,9 @@ package de.hhn.shogi.gamelogic.state;
 import de.hhn.shogi.gamelogic.util.Vec2;
 
 public class StateManager {
-    private static GameState state;
+    private GameState state;
 
-    public static void fieldClick(Vec2 pos) {
+    public void fieldClick(Vec2 pos) {
         state.fieldClick(pos);
     }
 

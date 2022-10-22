@@ -1,12 +1,14 @@
 package de.hhn.shogi.frontend;
 
 import de.hhn.shogi.gamelogic.Board;
+import de.hhn.shogi.gamelogic.Piece;
 import de.hhn.shogi.gamelogic.Player;
 import de.hhn.shogi.gamelogic.util.BoardSide;
 import de.hhn.shogi.gamelogic.util.Vec2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,10 +59,21 @@ public class Window extends JFrame {
         }
     }
 
-
+    //updated every time the window is resized
     public void paint(Graphics g) {
         super.paint(g);
-        //updated every time the window is resized
         title.setBounds(0, 0, getWidth(), 80);
+    }
+
+    //change the displayed piece on a field
+    public void setField(Vec2 vector, Piece piece){
+        fieldButtons.get(vector).setPiece(piece);
+    }
+
+    //adds or removes "legal move icons" from all positions in the List (add = true, remove = false)
+    public void displayPossibleMoves(ArrayList<Vec2> positions, boolean addOrRemove){
+        for(Vec2 pos : positions){
+            fieldButtons.get(pos).legalMove(addOrRemove);
+        }
     }
 }

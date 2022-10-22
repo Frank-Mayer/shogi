@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import static de.hhn.shogi.frontend.Window.BOARD_SIZE;
 
@@ -16,7 +17,10 @@ public class FieldButton extends JButton {
     private final Vec2 pos;
     private Piece piece;
     private int translatedX, translatedY;
-    private boolean hovering = false;
+    private boolean hovering = false, mousePressed = false;
+    private boolean legalMoveIcon = false;
+    private final Color legalMoveColor = new Color(145, 100, 145);
+    private final int legalMoveBorderWidth = 5;
     Window window;
 
     public FieldButton(Vec2 pos, Piece piece, Window w) {
@@ -38,16 +42,25 @@ public class FieldButton extends JButton {
             public void mouseEntered(MouseEvent e) {
                 hovering = true;
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 hovering = false;
+                mousePressed = false;
             }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mousePressed = true;
+            }
+
             @Override
             public void mouseReleased(MouseEvent e) {
-                if(hovering) {
+                if (mousePressed) {
                     System.out.println(pos);
-                    StateManager.fieldClick(pos);
+                    // new StateManager().fieldClick(pos);
                 }
+                mousePressed = false;
             }
         });
     }
@@ -62,22 +75,28 @@ public class FieldButton extends JButton {
 
         //paint piece if Piece is not null
         if (piece != null) {
-            setIcon(getImg(getPathName(), hovering));
+            setIcon(getImg(getPathName()));
         } else {
-           // setIcon(getHoverEffect());
+            setIcon(getEmptyEffect());
         }
     }
 
-    private ImageIcon getHoverEffect() {
-        if (hovering) {
-            BufferedImage img = new BufferedImage(75, 75, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D imgGraphics = img.createGraphics();
-            imgGraphics.setColor(new Color(0, 0, 0, 50));
+    //returns the background of an empty field
+    private ImageIcon getEmptyEffect() {
+        BufferedImage img = new BufferedImage(75, 75, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D imgGraphics = img.createGraphics();
+        if (mousePressed) {
+            imgGraphics.setColor(new Color(0, 0, 0, 60));
             imgGraphics.fillRect(0, 0, 75, 75);
-            return new ImageIcon(img);
-        } else {
-            return null;
+        } else if (hovering) {
+            imgGraphics.setColor(new Color(0, 0, 0, 30));
+            imgGraphics.fillRect(0, 0, 75, 75);
         }
+        if (legalMoveIcon) {
+            imgGraphics.setColor(legalMoveColor);
+            imgGraphics.fillOval(25, 25, 25, 25);
+        }
+        return new ImageIcon(img);
     }
 
     //rotate a buffered image 90°
@@ -91,20 +110,31 @@ public class FieldButton extends JButton {
     }
 
     //returns formatted image from path name
-    private ImageIcon getImg(String name, boolean hover) {
+    private ImageIcon getImg(String name) {
         ImageIcon pieceImg = new ImageIcon("src/de/hhn/shogi/frontend/images/" + name);
         ImageIcon plusImg = new ImageIcon("src/de/hhn/shogi/frontend/images/plus.png");
         BufferedImage img = new BufferedImage(75, 75, BufferedImage.TYPE_INT_ARGB);
+        //create graphics
         Graphics2D imgGraphics = img.createGraphics();
-        if (hover) {
-            imgGraphics.setColor(new Color(0, 0, 0, 50));
-            imgGraphics.fillRect(0, 0, 75, 75);
-        }
-        imgGraphics.drawImage(pieceImg.getImage(), 0, 0, pieceImg.getImageObserver());
+        //draw hover/click effect
+        imgGraphics.drawImage(getEmptyEffect().getImage(), 0, 0, null);
+        //draw piece
+        imgGraphics.drawImage(pieceImg.getImage(), 0, 0, null);
+        //add plus icon
         if (piece.isPromoted()) {
-            imgGraphics.drawImage(plusImg.getImage(), 0, 0, plusImg.getImageObserver());
+            imgGraphics.drawImage(plusImg.getImage(), 0, 0, null);
         }
+        //rotate
         BufferedImage rotated = piece.getSide() == window.bottom ? img : rotate(img);
+        //add legalMoveIcon
+        if (legalMoveIcon) {
+            Graphics2D rotatedGraphics = rotated.createGraphics();
+            rotatedGraphics.setColor(legalMoveColor);
+            rotatedGraphics.fillRect(2, 2, 72, legalMoveBorderWidth);
+            rotatedGraphics.fillRect(2, 2, legalMoveBorderWidth, 72);
+            rotatedGraphics.fillRect(74 - legalMoveBorderWidth, 2, legalMoveBorderWidth, 72);
+            rotatedGraphics.fillRect(2, 74 - legalMoveBorderWidth, 72, legalMoveBorderWidth);
+        }
         return new ImageIcon(rotated);
     }
 
@@ -120,5 +150,13 @@ public class FieldButton extends JButton {
 
     private int limit(int value, int min, int max) {
         return Math.min(Math.max(value, min), max);
+    }
+
+    public void setPiece(Piece piece) {
+        this.piece = piece;
+    }
+
+    public void legalMove(boolean addOrRemove) {
+        legalMoveIcon = addOrRemove;
     }
 }
