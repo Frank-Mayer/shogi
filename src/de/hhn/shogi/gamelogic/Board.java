@@ -46,7 +46,7 @@ public class Board {
         if (!occupied(from))
             throw new IllegalArgumentException("Moving Piece does not exist");
         Piece movingPiece = getPiece(from);
-        if (!RuleLogic.validMove(from, to, movingPiece.getType(), movingPiece.getSide() == bottomSide))
+        if (!RuleLogic.validMove(from, to, movingPiece))
             throw new IllegalArgumentException("Move is Illegal");
         if (occupied(to))
             returnPiece = getPiece(to);
@@ -92,6 +92,9 @@ public class Board {
         createPiece(6, 0, PieceType.SILVER_GENERAL, bottomSide);
         createPiece(2, 8, PieceType.SILVER_GENERAL, otherSide);
         createPiece(6, 8, PieceType.SILVER_GENERAL, otherSide);
+
+        //test piece
+        createPiece(4, 4, PieceType.ROOK, bottomSide);
     }
 
     //Places Knights according to Handicap

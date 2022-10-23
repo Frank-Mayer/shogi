@@ -80,7 +80,7 @@ public class FieldButton extends JButton {
     public static BufferedImage rotate(BufferedImage img) {
         BufferedImage rotated = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
         Graphics2D graphic = rotated.createGraphics();
-        graphic.rotate(Math.PI, img.getWidth() / 2, img.getHeight() / 2);
+        graphic.rotate(Math.PI, img.getWidth() >> 1, img.getHeight() >> 1);
         graphic.drawRenderedImage(img, null);
         graphic.dispose();
         return rotated;
@@ -118,7 +118,7 @@ public class FieldButton extends JButton {
     //select image based on PieceType
     public String getPathName() {
         return switch (piece.getBaseType()) {
-            default -> "TurmV2.png";
+            default -> "blank.png";
             case BISHOP, HORSE -> "bishop.png";
             case KING -> "king.png";
             case ROOK, DRAGON -> "rook.png";
@@ -154,7 +154,7 @@ public class FieldButton extends JButton {
                         for (int x = 0; x < 9; x++) {
                             for (int y = 0; y < 9; y++) {
                                 Vec2 testPos = new Vec2(x, y);
-                                if (RuleLogic.validMove(pos, testPos, piece.getType(), piece.getSide().equals(window.bottom))) {
+                                if (RuleLogic.validMove(pos, testPos, piece)) {
                                     possibleMoves.add(testPos);
                                 }
                             }

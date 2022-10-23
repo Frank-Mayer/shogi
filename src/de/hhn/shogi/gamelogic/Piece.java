@@ -67,4 +67,12 @@ public class Piece {
             case KING, GOLD_GENERAL -> false;
         };
     }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "type=" + type +
+                ", side=" + side +
+                '}';
+    }
 }

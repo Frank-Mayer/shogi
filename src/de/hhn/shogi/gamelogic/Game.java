@@ -35,4 +35,13 @@ public class Game {
     public Player getTopPlayer() {
         return topPlayer;
     }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "board=" + board +
+                ", bottomPlayer=" + bottomPlayer +
+                ", topPlayer=" + topPlayer +
+                '}';
+    }
 }
