@@ -20,7 +20,7 @@ public class FieldButton extends JButton {
     private int translatedX, translatedY;
     private boolean hovering = false, mousePressed = false;
     private boolean legalMoveIcon = false;
-    private final Color legalMoveColor = new Color(145, 100, 145);
+    private final Color legalMoveColor = new Color(145, 100, 145, 200);
     private final int legalMoveBorderWidth = 5;
     Window window;
 
@@ -119,9 +119,14 @@ public class FieldButton extends JButton {
     public String getPathName() {
         return switch (piece.getBaseType()) {
             default -> "blank.png";
+            case LANCE -> "lance.png";
+            case KNIGHT -> "knight.png";
             case BISHOP, HORSE -> "bishop.png";
             case KING -> "king.png";
             case ROOK, DRAGON -> "rook.png";
+            case PAWN -> "pawn.png";
+            case GOLD_GENERAL -> "gold_general.png";
+            case SILVER_GENERAL -> "silver_general.png";
         };
     }
 
@@ -140,32 +145,36 @@ public class FieldButton extends JButton {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                mousePressed = true;
+                if (e.getButton() == 1 && hovering) {
+                    mousePressed = true;
+                }
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (mousePressed) {
-                    System.out.println(pos);
+                if (e.getButton() == 1) {
+                    if (mousePressed && hovering) {
+                        System.out.println(pos);
 
-                    ////////////test code
-                    if (piece != null) {
-                        ArrayList<Vec2> possibleMoves = new ArrayList<>();
-                        for (int x = 0; x < 9; x++) {
-                            for (int y = 0; y < 9; y++) {
-                                Vec2 testPos = new Vec2(x, y);
-                                if (RuleLogic.validMove(pos, testPos, piece)) {
-                                    possibleMoves.add(testPos);
+                        ////////////test code
+                        if (piece != null) {
+                            ArrayList<Vec2> possibleMoves = new ArrayList<>();
+                            for (int x = 0; x < 9; x++) {
+                                for (int y = 0; y < 9; y++) {
+                                    Vec2 testPos = new Vec2(x, y);
+                                    if (RuleLogic.validMove(pos, testPos, piece)) {
+                                        possibleMoves.add(testPos);
+                                    }
                                 }
                             }
+                            window.displayPossibleMoves(possibleMoves, true);
                         }
-                        window.displayPossibleMoves(possibleMoves, true);
-                    }
-                    ////////////
+                        ////////////
 
-                    // new StateManager().fieldClick(pos);
+                        // new StateManager().fieldClick(pos);
+                    }
+                    mousePressed = false;
                 }
-                mousePressed = false;
             }
         };
     }
