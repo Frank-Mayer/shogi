@@ -151,4 +151,8 @@ public class Board {
     private void createPiece(int x, int y, PieceType type, BoardSide side) {
         map.put(new Vec2(x, y), new Piece(type, side));
     }
+
+    public BoardSide getBottomSide() {
+        return bottomSide;
+    }
 }

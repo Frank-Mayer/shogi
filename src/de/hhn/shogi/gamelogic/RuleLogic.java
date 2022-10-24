@@ -61,7 +61,7 @@ public class RuleLogic {
     }
 
     //returns all possible moves of a piece
-    public ArrayList<Vec2> getAllPossibleMoves(Vec2 pos, Piece piece) {
+    public static ArrayList<Vec2> getAllPossibleMoves(Vec2 pos, Piece piece) {
         ArrayList<Vec2> result = new ArrayList<>();
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {

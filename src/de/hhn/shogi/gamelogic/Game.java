@@ -12,8 +12,16 @@ public class Game {
 
     public static Game ACTIVE_GAME;
 
-    public Game(BoardSide bottomSide) {
+    public Game(BoardSide bottomSide, BoardSide startingSide) {
         board = new Board(bottomSide);
+        bottomPlayer = new Player(bottomSide);
+        BoardSide otherSide = bottomSide == BoardSide.SENTE ? BoardSide.GOTE : BoardSide.SENTE;
+        topPlayer = new Player(otherSide);
+        state = new StateManager(startingSide);
+    }
+
+    public Game(BoardSide bottomSide, int handicap) {
+        board = new Board(bottomSide, handicap);
         bottomPlayer = new Player(bottomSide);
         BoardSide otherSide = bottomSide == BoardSide.SENTE ? BoardSide.GOTE : BoardSide.SENTE;
         topPlayer = new Player(otherSide);
