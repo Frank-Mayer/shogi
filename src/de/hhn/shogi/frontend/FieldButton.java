@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static de.hhn.shogi.frontend.Window.BOARD_SIZE;
+import static de.hhn.shogi.gamelogic.Game.ACTIVE_GAME;
 
 public class FieldButton extends JButton {
     private final Vec2 pos;
@@ -155,23 +156,7 @@ public class FieldButton extends JButton {
                 if (e.getButton() == 1) {
                     if (mousePressed && hovering) {
                         System.out.println(pos);
-
-                        ////////////test code
-                        if (piece != null) {
-                            ArrayList<Vec2> possibleMoves = new ArrayList<>();
-                            for (int x = 0; x < 9; x++) {
-                                for (int y = 0; y < 9; y++) {
-                                    Vec2 testPos = new Vec2(x, y);
-                                    if (RuleLogic.validMove(pos, testPos, piece)) {
-                                        possibleMoves.add(testPos);
-                                    }
-                                }
-                            }
-                            window.displayPossibleMoves(possibleMoves, true);
-                        }
-                        ////////////
-
-                        // new StateManager().fieldClick(pos);
+                        ACTIVE_GAME.getState().fieldClick(pos);
                     }
                     mousePressed = false;
                 }
