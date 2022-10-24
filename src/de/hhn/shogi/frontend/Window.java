@@ -18,7 +18,6 @@ public class Window extends JFrame {
     Map<Vec2, FieldButton> fieldButtons = new HashMap<>();
     Board board;
     BoardSide bottom;
-    ArrayList<FieldButton> markedButtons = new ArrayList<>();
 
     public Window(Board board, Player player) {
         this.board = board;
@@ -76,14 +75,12 @@ public class Window extends JFrame {
         for (Vec2 pos : positions) {
             FieldButton b = fieldButtons.get(pos);
             b.legalMove(true);
-            markedButtons.add(b);
         }
     }
 
     public void removeIcons() {
-        for(FieldButton b : markedButtons){
+        for(FieldButton b : fieldButtons.values()){
             b.legalMove(false);
         }
-        markedButtons.clear();
     }
 }
