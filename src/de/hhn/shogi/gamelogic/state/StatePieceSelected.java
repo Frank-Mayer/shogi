@@ -34,11 +34,14 @@ public class StatePieceSelected extends PlayerTurnState {
             getMainWindow().setField(pos, board.getPiece(pos));
             getMainWindow().setField(selectedPos, board.getPiece(selectedPos));
             ACTIVE_GAME.getState().changeState(new StateNeutralTurn(getSide() == BoardSide.SENTE ? BoardSide.GOTE : BoardSide.SENTE));
-        } else if (board.occupied(pos)) {
+        } else if (board.occupied(pos) && pos != selectedPos) {
             if (board.getPiece(pos).getSide() == getSide()) {
                 ACTIVE_GAME.getState().changeState(new StatePieceSelected(getSide(), pos));
                 getMainWindow().removeIcons();
                 getMainWindow().displayPossibleMoves(RuleLogic.getAllPossibleMoves(pos, board.getPiece(pos)));
+            } else {
+                getMainWindow().removeIcons();
+                ACTIVE_GAME.getState().changeState(new StateNeutralTurn(getSide()));
             }
         } else {
             getMainWindow().removeIcons();

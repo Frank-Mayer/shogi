@@ -1,6 +1,7 @@
 package de.hhn.shogi.gamelogic;
 
 
+import de.hhn.shogi.gamelogic.util.PieceType;
 import de.hhn.shogi.gamelogic.util.Vec2;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class RuleLogic {
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
                 Vec2 toPos = new Vec2(x, y);
-                if(validMove(pos, toPos, piece)){
+                if (validMove(pos, toPos, piece)) {
                     result.add(toPos);
                 }
             }
@@ -74,6 +75,57 @@ public class RuleLogic {
         return result;
     }
 
+    //returns all possible positions you can drop your piece
+    public static ArrayList<Vec2> getAllPossibleDrops(Piece piece) {
+        ArrayList<Vec2> result = new ArrayList<>();
+
+        switch (piece.getType()) {
+            case PAWN:
+                for (int y = 0; y < 9; y++) {
+                    ArrayList<Vec2> column = new ArrayList<>();
+                    for (int x = 0; x < 8; x++) {
+                        Vec2 dropPos = new Vec2(x, y);
+                        if (!ACTIVE_GAME.getBoard().occupied(dropPos)) {
+                            column.add(dropPos);
+                        } else {
+                            //test if column contains pawn -> if yes: clear column
+                            Piece occupyingPiece = ACTIVE_GAME.getBoard().getPiece(dropPos);
+                            if (occupyingPiece.getType().equals(PieceType.PAWN) && !occupyingPiece.isPromoted() && occupyingPiece.getSide() == piece.getSide()) {
+                                column.clear();
+                                break;
+                            }
+                        }
+                    }
+                    result.addAll(column);
+                }
+                break;
+            case LANCE:
+                for (int x = 0; x < 9; x++) {
+                    for (int y = 0; y < 8; y++) {
+                        Vec2 dropPos = new Vec2(x, y);
+                        if (!ACTIVE_GAME.getBoard().occupied(dropPos)) result.add(dropPos);
+                    }
+                }
+                break;
+            case KNIGHT:
+                for (int x = 0; x < 9; x++) {
+                    for (int y = 0; y < 7; y++) {
+                        Vec2 dropPos = new Vec2(x, y);
+                        if (!ACTIVE_GAME.getBoard().occupied(dropPos)) result.add(dropPos);
+                    }
+                }
+                break;
+            default:
+                for (int x = 0; x < 9; x++) {
+                    for (int y = 0; y < 9; y++) {
+                        Vec2 dropPos = new Vec2(x, y);
+                        if (!ACTIVE_GAME.getBoard().occupied(dropPos)) result.add(dropPos);
+                    }
+                }
+                break;
+        }
+        return result;
+    }
 
     private static boolean silverGeneral(int xOff, int yOff) {
         return (Math.abs(yOff) == 1 && 1 == Math.abs(xOff)) || (yOff == 1 && xOff == 0);
