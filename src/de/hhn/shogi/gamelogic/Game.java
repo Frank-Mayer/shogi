@@ -1,55 +1,53 @@
 package de.hhn.shogi.gamelogic;
 
-import de.hhn.shogi.frontend.Window;
 import de.hhn.shogi.gamelogic.state.StateManager;
 import de.hhn.shogi.gamelogic.util.BoardSide;
 
 public class Game {
-    private Board board;
-    private Player bottomPlayer;
-    private Player topPlayer;
-    private StateManager state;
+  public static Game ACTIVE_GAME;
+  private final Board board;
+  private final Player bottomPlayer;
+  private final Player topPlayer;
+  private final StateManager state;
 
-    public static Game ACTIVE_GAME;
+  public Game(BoardSide bottomSide, BoardSide startingSide) {
+      this.board = new Board(bottomSide);
+      this.bottomPlayer = new Player(bottomSide);
+    BoardSide otherSide = bottomSide == BoardSide.SENTE ? BoardSide.GOTE : BoardSide.SENTE;
+      this.topPlayer = new Player(otherSide);
+      this.state = new StateManager(startingSide);
+  }
 
-    public Game(BoardSide bottomSide, BoardSide startingSide) {
-        board = new Board(bottomSide);
-        bottomPlayer = new Player(bottomSide);
-        BoardSide otherSide = bottomSide == BoardSide.SENTE ? BoardSide.GOTE : BoardSide.SENTE;
-        topPlayer = new Player(otherSide);
-        state = new StateManager(startingSide);
-    }
+  public Game(BoardSide bottomSide, int handicap) {
+      this.board = new Board(bottomSide, handicap);
+      this.bottomPlayer = new Player(bottomSide);
+    BoardSide otherSide = bottomSide == BoardSide.SENTE ? BoardSide.GOTE : BoardSide.SENTE;
+      this.topPlayer = new Player(otherSide);
+      this.state = new StateManager();
+  }
 
-    public Game(BoardSide bottomSide, int handicap) {
-        board = new Board(bottomSide, handicap);
-        bottomPlayer = new Player(bottomSide);
-        BoardSide otherSide = bottomSide == BoardSide.SENTE ? BoardSide.GOTE : BoardSide.SENTE;
-        topPlayer = new Player(otherSide);
-        state = new StateManager();
-    }
+  public Board getBoard() {
+    return this.board;
+  }
 
-    public Board getBoard() {
-        return board;
-    }
+  public Player getBottomPlayer() {
+    return this.bottomPlayer;
+  }
 
-    public Player getBottomPlayer() {
-        return bottomPlayer;
-    }
+  public StateManager getState() {
+    return this.state;
+  }
 
-    public StateManager getState() {
-        return state;
-    }
+  public Player getTopPlayer() {
+    return this.topPlayer;
+  }
 
-    public Player getTopPlayer() {
-        return topPlayer;
-    }
-
-    @Override
-    public String toString() {
-        return "Game{" +
-                "board=" + board +
-                ", bottomPlayer=" + bottomPlayer +
-                ", topPlayer=" + topPlayer +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "Game{" +
+      "board=" + this.board +
+      ", bottomPlayer=" + this.bottomPlayer +
+      ", topPlayer=" + this.topPlayer +
+      '}';
+  }
 }

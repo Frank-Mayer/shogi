@@ -6,17 +6,17 @@ import de.hhn.shogi.gamelogic.util.Vec2;
 
 public class StateOnlineTurn extends PlayerTurnState {
 
-    public StateOnlineTurn(BoardSide side) {
-        super(side);
-    }
+  public StateOnlineTurn(BoardSide side) {
+    super(side);
+  }
 
-    @Override
-    public void fieldClick(Vec2 pos) {
+  @Override
+  public void fieldClick(Vec2 pos) {
 
-    }
+  }
 
-    @Override
-    public void handClick(PieceType type) {
+  @Override
+  public void handClick(PieceType type) {
 
-    }
+  }
 }
