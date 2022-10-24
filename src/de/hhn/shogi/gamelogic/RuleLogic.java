@@ -26,7 +26,7 @@ public class RuleLogic {
         return switch (piece.getType()) {
             case BISHOP ->
                 // A bishop (角) moves any number of squares in a diagonal direction.
-                    bishop(xOffset, yOffset);
+                    bishop(from, to);
             case GOLD_GENERAL ->
                 //  A gold general (金) moves one square orthogonally, or one square diagonally forward, giving it six possible destinations. It cannot move diagonally backwards.
                     goldGeneral(xOffset, yOffset);
@@ -53,7 +53,7 @@ public class RuleLogic {
                     rook(from, to) || king(xOffset, yOffset);
             case HORSE ->
                 // A horse (龍馬) moves as a bishop and as a king
-                    bishop(xOffset, yOffset) || king(xOffset, yOffset);
+                    bishop(from, to) || king(xOffset, yOffset);
         };
     }
 
@@ -69,49 +69,41 @@ public class RuleLogic {
         return ((yOff == 0 || yOff == 1) && Math.abs(xOff) <= 1) || (yOff == -1 && xOff == 0);
     }
 
-    private static boolean bishop(int xOff, int yOff) {
-        return Math.abs(yOff) == Math.abs(xOff);
-    }
+    private static boolean bishop(Vec2 from, Vec2 to) {
+        if (Math.abs(Vec2.xDiff(from, to)) != Math.abs(Vec2.yDiff(from, to))) return false;
+        int offset = Math.abs(Vec2.xDiff(from, to));
 
-    private static boolean king(int xOff, int yOff) {
-        return Math.abs(yOff) <= 1 && Math.abs(xOff) <= 1;
-    }
-
-    private static boolean rook(Vec2 from, Vec2 to) {
-        //check up
-        if (Vec2.xDiff(from, to) == 0 && Vec2.yDiff(from, to) > 0) {
-            for (int i = from.getY() + 1; i < to.getY(); i++) {
-                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(from.getX(), i)) != null) {
+        //right-up
+        if (Vec2.xDiff(from, to) > 0 && Vec2.yDiff(from, to) > 0) {
+            for (int i = 1; i < offset ; i++) {
+                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(from.getX()+i, from.getY()+i)) != null) {
                     return false;
                 }
             }
             return true;
         }
-
-        //check down
-        if (Vec2.xDiff(from, to) == 0 && Vec2.yDiff(from, to) < 0) {
-            for (int i = from.getY() - 1; i > to.getY(); i--) {
-                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(from.getX(), i)) != null) {
+        //right-down
+        if (Vec2.xDiff(from, to) > 0 && Vec2.yDiff(from, to) < 0) {
+            for (int i = 1; i < offset ; i++) {
+                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(from.getX()+i, from.getY()-i)) != null) {
                     return false;
                 }
             }
             return true;
         }
-
-        //check right
-        if (Vec2.xDiff(from, to) > 0 && Vec2.yDiff(from, to) == 0) {
-            for (int i = from.getX() + 1; i < to.getX(); i++) {
-                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(i, from.getY())) != null) {
+        //left-up
+        if (Vec2.xDiff(from, to) < 0 && Vec2.yDiff(from, to) > 0) {
+            for (int i = 1; i < offset ; i++) {
+                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(from.getX()-i, from.getY()+i)) != null) {
                     return false;
                 }
             }
             return true;
         }
-
-        //check left
-        if (Vec2.xDiff(from, to) < 0 && Vec2.yDiff(from, to) == 0) {
-            for (int i = from.getX() - 1; i > to.getX(); i--) {
-                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(i, from.getY())) != null) {
+        //left-down
+        if (Vec2.xDiff(from, to) < 0 && Vec2.yDiff(from, to) < 0) {
+            for (int i = 1; i < offset ; i++) {
+                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(from.getX()-i, from.getY()-i)) != null) {
                     return false;
                 }
             }
@@ -120,11 +112,32 @@ public class RuleLogic {
         return false;
     }
 
+    private static boolean king(int xOff, int yOff) {
+        return Math.abs(yOff) <= 1 && Math.abs(xOff) <= 1;
+    }
+
+    private static boolean rook(Vec2 from, Vec2 to) {
+        if (Vec2.xDiff(from, to) > 0 && Vec2.yDiff(from, to) == 0) {
+            for (int i = from.getX() + 1; i < to.getX(); i++) {
+                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(i, from.getY())) != null) {
+                    return false;
+                }
+            }
+            return true;
+        } else if (Vec2.xDiff(from, to) < 0 && Vec2.yDiff(from, to) == 0) {
+            for (int i = from.getX() - 1; i > to.getX(); i--) {
+                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(i, from.getY())) != null) {
+                    return false;
+                }
+            }
+            return true;
+        } else return lance(from, to, true) || lance(from, to, false);
+    }
+
     private static boolean pawn(int xOff, int yOff) {
         return yOff == 1 && xOff == 0;
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private static boolean lance(Vec2 from, Vec2 to, boolean facingUp) {
         if (facingUp) {
             //check up
@@ -136,7 +149,7 @@ public class RuleLogic {
                 }
                 return true;
             }
-        }else{
+        } else {
             //check down
             if (Vec2.xDiff(from, to) == 0 && Vec2.yDiff(from, to) < 0) {
                 for (int i = from.getY() - 1; i > to.getY(); i--) {

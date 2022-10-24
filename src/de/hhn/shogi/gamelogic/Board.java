@@ -94,7 +94,9 @@ public class Board {
         createPiece(6, 8, PieceType.SILVER_GENERAL, otherSide);
 
         //test piece
-        createPiece(4, 4, PieceType.ROOK, bottomSide);
+        createPiece(3, 4, PieceType.BISHOP, bottomSide);
+        createPiece(6, 4, PieceType.BISHOP, otherSide);
+        getPiece(new Vec2(6, 4)).promote();
     }
 
     //Places Knights according to Handicap
