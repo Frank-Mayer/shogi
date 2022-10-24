@@ -3,6 +3,8 @@ package de.hhn.shogi.gamelogic;
 
 import de.hhn.shogi.gamelogic.util.Vec2;
 
+import java.util.ArrayList;
+
 import static de.hhn.shogi.gamelogic.Game.ACTIVE_GAME;
 
 public class RuleLogic {
@@ -10,6 +12,7 @@ public class RuleLogic {
     public RuleLogic() {
     }
 
+    //is it a valid move?
     public static boolean validMove(Vec2 from, Vec2 to, Piece piece) {
         int xOffset = Vec2.xDiff(from, to);
         int yOffset = Vec2.yDiff(from, to);
@@ -57,6 +60,21 @@ public class RuleLogic {
         };
     }
 
+    //returns all possible moves of a piece
+    public ArrayList<Vec2> getAllPossibleMoves(Vec2 pos, Piece piece) {
+        ArrayList<Vec2> result = new ArrayList<>();
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                Vec2 toPos = new Vec2(x, y);
+                if(validMove(pos, toPos, piece)){
+                    result.add(toPos);
+                }
+            }
+        }
+        return result;
+    }
+
+
     private static boolean silverGeneral(int xOff, int yOff) {
         return (Math.abs(yOff) == 1 && 1 == Math.abs(xOff)) || (yOff == 1 && xOff == 0);
     }
@@ -75,8 +93,8 @@ public class RuleLogic {
 
         //right-up
         if (Vec2.xDiff(from, to) > 0 && Vec2.yDiff(from, to) > 0) {
-            for (int i = 1; i < offset ; i++) {
-                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(from.getX()+i, from.getY()+i)) != null) {
+            for (int i = 1; i < offset; i++) {
+                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(from.getX() + i, from.getY() + i)) != null) {
                     return false;
                 }
             }
@@ -84,8 +102,8 @@ public class RuleLogic {
         }
         //right-down
         if (Vec2.xDiff(from, to) > 0 && Vec2.yDiff(from, to) < 0) {
-            for (int i = 1; i < offset ; i++) {
-                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(from.getX()+i, from.getY()-i)) != null) {
+            for (int i = 1; i < offset; i++) {
+                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(from.getX() + i, from.getY() - i)) != null) {
                     return false;
                 }
             }
@@ -93,8 +111,8 @@ public class RuleLogic {
         }
         //left-up
         if (Vec2.xDiff(from, to) < 0 && Vec2.yDiff(from, to) > 0) {
-            for (int i = 1; i < offset ; i++) {
-                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(from.getX()-i, from.getY()+i)) != null) {
+            for (int i = 1; i < offset; i++) {
+                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(from.getX() - i, from.getY() + i)) != null) {
                     return false;
                 }
             }
@@ -102,8 +120,8 @@ public class RuleLogic {
         }
         //left-down
         if (Vec2.xDiff(from, to) < 0 && Vec2.yDiff(from, to) < 0) {
-            for (int i = 1; i < offset ; i++) {
-                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(from.getX()-i, from.getY()-i)) != null) {
+            for (int i = 1; i < offset; i++) {
+                if (ACTIVE_GAME.getBoard().getPiece(new Vec2(from.getX() - i, from.getY() - i)) != null) {
                     return false;
                 }
             }
@@ -162,5 +180,6 @@ public class RuleLogic {
         }
         return false;
     }
+
 
 }

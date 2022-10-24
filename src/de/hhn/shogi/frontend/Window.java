@@ -70,7 +70,7 @@ public class Window extends JFrame {
         fieldButtons.get(vector).setPiece(piece);
     }
 
-    //adds or removes "legal move icons" from all positions in the List (add = true, remove = false)
+    //adds "legal move" icons on all positions in the List
     public void displayPossibleMoves(ArrayList<Vec2> positions) {
         for (Vec2 pos : positions) {
             FieldButton b = fieldButtons.get(pos);
@@ -78,6 +78,7 @@ public class Window extends JFrame {
         }
     }
 
+    //removes all "legal move" icons
     public void removeIcons() {
         for(FieldButton b : fieldButtons.values()){
             b.legalMove(false);
