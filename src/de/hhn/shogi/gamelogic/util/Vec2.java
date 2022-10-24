@@ -41,17 +41,6 @@ public class Vec2 {
         return Y;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Vec2 vec2)
-            return vec2.getX() == X && vec2.getY() == Y;
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Y * 9 + X;
-    }
 
     // Return true if the name is valid like "C2" or "a9"
     private static boolean isValidName(String name) {
@@ -77,5 +66,17 @@ public class Vec2 {
     @Override
     public String toString() {
         return getName().toUpperCase();
+    }
+
+    @Override
+    public int hashCode() {
+        return Y * 9 + X;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Vec2 vec2)
+            return vec2.getX() == X && vec2.getY() == Y;
+        return false;
     }
 }
