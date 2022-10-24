@@ -18,6 +18,7 @@ public class Window extends JFrame {
     Map<Vec2, FieldButton> fieldButtons = new HashMap<>();
     Board board;
     BoardSide bottom;
+    ArrayList<FieldButton> markedButtons = new ArrayList<>();
 
     public Window(Board board, Player player) {
         this.board = board;
@@ -66,14 +67,23 @@ public class Window extends JFrame {
     }
 
     //change the displayed piece on a field
-    public void setField(Vec2 vector, Piece piece){
+    public void setField(Vec2 vector, Piece piece) {
         fieldButtons.get(vector).setPiece(piece);
     }
 
     //adds or removes "legal move icons" from all positions in the List (add = true, remove = false)
-    public void displayPossibleMoves(ArrayList<Vec2> positions, boolean addOrRemove){
-        for(Vec2 pos : positions){
-            fieldButtons.get(pos).legalMove(addOrRemove);
+    public void displayPossibleMoves(ArrayList<Vec2> positions) {
+        for (Vec2 pos : positions) {
+            FieldButton b = fieldButtons.get(pos);
+            b.legalMove(true);
+            markedButtons.add(b);
         }
+    }
+
+    public void removeIcons() {
+        for(FieldButton b : markedButtons){
+            b.legalMove(false);
+        }
+        markedButtons.clear();
     }
 }
