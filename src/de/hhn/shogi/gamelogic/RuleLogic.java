@@ -2,6 +2,7 @@ package de.hhn.shogi.gamelogic;
 
 
 import de.hhn.shogi.gamelogic.util.PieceType;
+import de.hhn.shogi.gamelogic.util.Promote;
 import de.hhn.shogi.gamelogic.util.Vec2;
 
 import java.util.ArrayList;
@@ -75,6 +76,25 @@ public class RuleLogic {
             }
         }
         return result;
+    }
+
+    public static Promote promotionStatus(Piece piece, Vec2 pos) {
+        if (piece.getSide() == ACTIVE_GAME.getBoard().getBottomSide()) {
+            if (pos.getY() >= 6) {
+                if(((piece.getType() == PieceType.PAWN || PieceType.LANCE == piece.getType()) && pos.getY() >= 8) || ((PieceType.KNIGHT == piece.getType()) && pos.getY() >= 7)){
+                    return Promote.MUST;
+                }
+                return Promote.CAN;
+            }
+        } else {
+            if (pos.getY() <= 2) {
+                if(((piece.getType() == PieceType.PAWN || PieceType.LANCE == piece.getType()) && pos.getY() <= 0) || ((PieceType.KNIGHT == piece.getType()) && pos.getY() <= 1)){
+                    return Promote.MUST;
+                }
+                return Promote.CAN;
+            }
+        }
+        return Promote.CANNOT;
     }
 
     //returns all possible positions you can drop your piece
