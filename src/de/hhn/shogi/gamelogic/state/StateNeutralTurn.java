@@ -11,23 +11,23 @@ import static de.hhn.shogi.gamelogic.Game.ACTIVE_GAME;
 
 public class StateNeutralTurn extends PlayerTurnState {
 
-  public StateNeutralTurn(BoardSide side) {
-    super(side);
-  }
-
-  @Override
-  public void fieldClick(Vec2 pos) {
-    Board board = ACTIVE_GAME.getBoard();
-    if (board.occupied(pos)) {
-      if (board.getPiece(pos).getSide() == this.getSide()) {
-        ACTIVE_GAME.getState().changeState(new StatePieceSelected(this.getSide(), pos));
-        getMainWindow().displayPossibleMoves(RuleLogic.getAllPossibleMoves(pos, board.getPiece(pos)));
-      }
+    public StateNeutralTurn(BoardSide side) {
+        super(side);
     }
-  }
 
-  @Override
-  public void handClick(PieceType type) {
+    @Override
+    public void fieldClick(Vec2 pos) {
+        Board board = ACTIVE_GAME.getBoard();
+        if (board.occupied(pos)) {
+            if (board.getPiece(pos).getSide() == this.getSide()) {
+                ACTIVE_GAME.getState().changeState(new StatePieceSelected(this.getSide(), pos));
+                getMainWindow().displayPossibleMoves(RuleLogic.getAllPossibleMoves(pos, board.getPiece(pos)));
+            }
+        }
+    }
 
-  }
+    @Override
+    public void handClick(PieceType type) {
+
+    }
 }
