@@ -31,7 +31,7 @@ public class Window extends JFrame {
         //window settings
         this.setTitle("Shogi");
         this.setExtendedState(Frame.MAXIMIZED_BOTH);
-        this.setSize(1300, 1000);
+        this.setSize(1600, 1000);
         this.setLayout(null);
         this.getContentPane().setBackground(new Color(50, 40, 50));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,8 +47,8 @@ public class Window extends JFrame {
         new DisplayBoard(this);
 
         //hand
-        hand2 = new DisplayHand(this, ACTIVE_GAME.getTopPlayer().getHand());
-        hand1 = new DisplayHand(this, ACTIVE_GAME.getBottomPlayer().getHand());
+        hand2 = new DisplayHand(this, ACTIVE_GAME.getTopPlayer());
+        hand1 = new DisplayHand(this, ACTIVE_GAME.getBottomPlayer());
 
 
         //makes a FieldButton for every position
