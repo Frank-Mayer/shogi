@@ -1,9 +1,9 @@
 package de.hhn.shogi.gamelogic.state;
 
 import de.hhn.shogi.gamelogic.Board;
+import de.hhn.shogi.gamelogic.Piece;
 import de.hhn.shogi.gamelogic.RuleLogic;
 import de.hhn.shogi.gamelogic.util.BoardSide;
-import de.hhn.shogi.gamelogic.util.PieceType;
 import de.hhn.shogi.gamelogic.util.Vec2;
 
 import static de.hhn.shogi.Main.getMainWindow;
@@ -27,7 +27,7 @@ public class StateNeutralTurn extends PlayerTurnState {
     }
 
     @Override
-    public void handClick(PieceType type) {
+    public void handClick(Piece type) {
 
     }
 }

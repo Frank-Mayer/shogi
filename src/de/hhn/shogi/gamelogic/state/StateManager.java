@@ -1,6 +1,7 @@
 package de.hhn.shogi.gamelogic.state;
 
 import de.hhn.shogi.gamelogic.Board;
+import de.hhn.shogi.gamelogic.Piece;
 import de.hhn.shogi.gamelogic.util.BoardSide;
 import de.hhn.shogi.gamelogic.util.PieceType;
 import de.hhn.shogi.gamelogic.util.Vec2;
@@ -20,8 +21,8 @@ public class StateManager {
         this.state.fieldClick(pos);
     }
 
-    public void handClick(PieceType type) {
-        this.state.handClick(type);
+    public void handClick(Piece piece) {
+        this.state.handClick(piece);
     }
 
     public void changeState(GameState state) {

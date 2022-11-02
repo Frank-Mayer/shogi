@@ -1,6 +1,7 @@
 package de.hhn.shogi.frontend;
 
 import de.hhn.shogi.gamelogic.Board;
+import de.hhn.shogi.gamelogic.Hand;
 import de.hhn.shogi.gamelogic.Piece;
 import de.hhn.shogi.gamelogic.Player;
 import de.hhn.shogi.gamelogic.util.BoardSide;
@@ -12,11 +13,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static de.hhn.shogi.gamelogic.Game.ACTIVE_GAME;
+
 public class Window extends JFrame {
     public static final int BOARD_SIZE = 750;
     JLabel title = new JLabel();
     Map<Vec2, FieldButton> fieldButtons = new HashMap<>();
     Board board;
+    DisplayHand hand1;
+    DisplayHand hand2;
     BoardSide bottom;
 
     public Window(Board board, Player player) {
@@ -42,7 +47,8 @@ public class Window extends JFrame {
         new DisplayBoard(this);
 
         //hand
-        new DisplayHand(this, player.getHand());
+        hand2 = new DisplayHand(this, ACTIVE_GAME.getTopPlayer().getHand());
+        hand1 = new DisplayHand(this, ACTIVE_GAME.getBottomPlayer().getHand());
 
 
         //makes a FieldButton for every position
@@ -50,11 +56,7 @@ public class Window extends JFrame {
             for (int y = 0; y < 9; y++) {
                 Vec2 pos = new Vec2(x, y);
                 FieldButton button;
-                if (board.occupied(pos)) {
-                    button = new FieldButton(pos, board.getPiece(pos), this);
-                } else {
-                    button = new FieldButton(pos, null, this);
-                }
+                button = new FieldButton(pos, board.getPiece(pos), this);
                 this.fieldButtons.put(pos, button);
             }
         }
@@ -84,5 +86,9 @@ public class Window extends JFrame {
         for (FieldButton b : this.fieldButtons.values()) {
             b.legalMove(false);
         }
+    }
+
+    public void updateHand(Player p) {
+        (p.equals(ACTIVE_GAME.getBottomPlayer()) ? hand1 : hand2).update();
     }
 }

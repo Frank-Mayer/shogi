@@ -5,7 +5,6 @@ import de.hhn.shogi.gamelogic.Piece;
 import de.hhn.shogi.gamelogic.Player;
 import de.hhn.shogi.gamelogic.RuleLogic;
 import de.hhn.shogi.gamelogic.util.BoardSide;
-import de.hhn.shogi.gamelogic.util.PieceType;
 import de.hhn.shogi.gamelogic.util.Vec2;
 
 import static de.hhn.shogi.Main.getMainWindow;
@@ -28,7 +27,9 @@ public class StatePieceSelected extends PlayerTurnState {
             Piece beatPiece = board.move(this.selectedPos, pos);
             if (beatPiece != null) {
                 Player currentPlayer = this.getSide() == board.getBottomSide() ? ACTIVE_GAME.getBottomPlayer() : ACTIVE_GAME.getTopPlayer();
+                beatPiece.setSide(beatPiece.getSide() == BoardSide.GOTE ? BoardSide.SENTE : BoardSide.GOTE);
                 currentPlayer.getHand().addPiece(beatPiece);
+                getMainWindow().updateHand(currentPlayer);
             }
             getMainWindow().removeIcons();
             getMainWindow().setField(pos, board.getPiece(pos));
@@ -50,7 +51,7 @@ public class StatePieceSelected extends PlayerTurnState {
     }
 
     @Override
-    public void handClick(PieceType type) {
+    public void handClick(Piece type) {
 
     }
 }

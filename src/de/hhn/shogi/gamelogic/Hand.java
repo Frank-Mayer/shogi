@@ -36,6 +36,10 @@ public class Hand {
         return returnValue;
     }
 
+    public ArrayList<Piece> getPieces() {
+        return pieces;
+    }
+
     public int getHandSize() {
         return this.pieces.size();
     }

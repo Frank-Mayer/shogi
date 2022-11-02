@@ -22,22 +22,39 @@ public class FieldButton extends JButton {
     private int translatedX, translatedY;
     private boolean hovering = false, mousePressed = false;
     private boolean legalMoveIcon = false;
+    private boolean isHandButton;
+
 
     public FieldButton(Vec2 pos, Piece piece, Window w) {
         super();
         this.pos = pos;
         this.piece = piece;
         this.window = w;
+        isHandButton = false;
 
         //init button
-        this.translatedX = this.limit(pos.getX() * 75 + this.window.getWidth() / 2 - BOARD_SIZE / 2 + 37, 0, this.window.getWidth());
-        this.translatedY = this.limit((8 - pos.getY()) * 75 + this.window.getHeight() / 2 - BOARD_SIZE / 2 + 37, 0, this.window.getHeight());
+        init();
+    }
+
+    public FieldButton(int x, int y, Piece piece, Window w) {
+        super();
+        this.pos = null;
+        this.piece = piece;
+        this.window = w;
+        isHandButton = true;
+        translatedX = x;
+        translatedY = y;
+
+        //init button
+        init();
+    }
+
+    private void init() {
+        setTranslated();
         this.setContentAreaFilled(false);
         this.setBounds(this.translatedX, this.translatedY, 75, 75);
         this.setBorderPainted(false);
         this.window.add(this, 0);
-
-        //paint border if hovered over
         this.addMouseListener(this.mouseListener());
     }
 
@@ -51,12 +68,23 @@ public class FieldButton extends JButton {
         return rotated;
     }
 
+    private void setTranslated() {
+        if (!isHandButton) {
+            translatedX = limit(pos.getX() * 75 + window.getWidth() / 2 - BOARD_SIZE / 2 + 37, 0, window.getWidth());
+            translatedY = limit((8 - pos.getY()) * 75 + window.getHeight() / 2 - BOARD_SIZE / 2 + 37, 0, window.getHeight());
+        }
+    }
+
+    public void setTranslated(int x, int y) {
+        translatedY = y;
+        translatedX = x;
+    }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         // calculate position on the screen from shogi coordinates
-        this.translatedX = this.limit(this.pos.getX() * 75 + this.window.getWidth() / 2 - BOARD_SIZE / 2 + 37, 0, this.window.getWidth());
-        this.translatedY = this.limit((8 - this.pos.getY()) * 75 + this.window.getHeight() / 2 - BOARD_SIZE / 2 + 37, 0, this.window.getHeight());
+        setTranslated();
         this.setBounds(this.translatedX, this.translatedY, 75, 75);
 
         //paint piece if Piece is not null
@@ -153,8 +181,13 @@ public class FieldButton extends JButton {
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() == 1) {
                     if (FieldButton.this.mousePressed && FieldButton.this.hovering) {
-                        System.out.println(FieldButton.this.pos);
-                        ACTIVE_GAME.getState().fieldClick(FieldButton.this.pos);
+                        if(!isHandButton) {
+                            System.out.println(FieldButton.this.pos);
+                            ACTIVE_GAME.getState().fieldClick(FieldButton.this.pos);
+                        }else{
+                            System.out.println(piece);
+                            ACTIVE_GAME.getState().handClick(piece);
+                        }
                     }
                     FieldButton.this.mousePressed = false;
                 }
@@ -168,6 +201,10 @@ public class FieldButton extends JButton {
 
     public void setPiece(Piece piece) {
         this.piece = piece;
+    }
+
+    public boolean hasPiece(){
+        return piece != null;
     }
 
     public void legalMove(boolean addOrRemove) {

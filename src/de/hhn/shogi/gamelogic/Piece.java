@@ -66,6 +66,10 @@ public class Piece {
         };
     }
 
+    public void setSide(BoardSide side) {
+        this.side = side;
+    }
+
     @Override
     public String toString() {
         return "Piece{" +
