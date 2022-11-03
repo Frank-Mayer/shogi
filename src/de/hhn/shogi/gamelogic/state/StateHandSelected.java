@@ -6,11 +6,11 @@ import de.hhn.shogi.gamelogic.util.PieceType;
 import de.hhn.shogi.gamelogic.util.Vec2;
 
 public class StateHandSelected extends PlayerTurnState {
-    private final PieceType type;
+    private final Piece piece;
 
-    public StateHandSelected(BoardSide side, PieceType type) {
+    public StateHandSelected(BoardSide side, Piece piece) {
         super(side);
-        this.type = type;
+        this.piece = piece;
     }
 
     @Override

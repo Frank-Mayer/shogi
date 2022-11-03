@@ -27,7 +27,12 @@ public class StateNeutralTurn extends PlayerTurnState {
     }
 
     @Override
-    public void handClick(Piece type) {
-
+    public void handClick(Piece piece) {
+        if(piece != null){
+            if (piece.getSide() == this.getSide()) {
+                ACTIVE_GAME.getState().changeState(new StateHandSelected(this.getSide(), piece));
+                getMainWindow().displayPossibleMoves(RuleLogic.getAllPossibleDrops(piece));
+            }
+        }
     }
 }

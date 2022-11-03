@@ -81,14 +81,14 @@ public class RuleLogic {
     public static Promote promotionStatus(Piece piece, Vec2 pos) {
         if (piece.getSide() == ACTIVE_GAME.getBoard().getBottomSide()) {
             if (pos.getY() >= 6) {
-                if(((piece.getType() == PieceType.PAWN || PieceType.LANCE == piece.getType()) && pos.getY() >= 8) || ((PieceType.KNIGHT == piece.getType()) && pos.getY() >= 7)){
+                if (((piece.getType() == PieceType.PAWN || PieceType.LANCE == piece.getType()) && pos.getY() >= 8) || ((PieceType.KNIGHT == piece.getType()) && pos.getY() >= 7)) {
                     return Promote.MUST;
                 }
                 return Promote.CAN;
             }
         } else {
             if (pos.getY() <= 2) {
-                if(((piece.getType() == PieceType.PAWN || PieceType.LANCE == piece.getType()) && pos.getY() <= 0) || ((PieceType.KNIGHT == piece.getType()) && pos.getY() <= 1)){
+                if (((piece.getType() == PieceType.PAWN || PieceType.LANCE == piece.getType()) && pos.getY() <= 0) || ((PieceType.KNIGHT == piece.getType()) && pos.getY() <= 1)) {
                     return Promote.MUST;
                 }
                 return Promote.CAN;
@@ -102,10 +102,10 @@ public class RuleLogic {
         ArrayList<Vec2> result = new ArrayList<>();
 
         switch (piece.getType()) {
-            case PAWN:
-                for (int y = 0; y < 9; y++) {
+            case PAWN -> {
+                for (int x = 0; x < 9; x++) {
                     ArrayList<Vec2> column = new ArrayList<>();
-                    for (int x = 0; x < 8; x++) {
+                    for (int y = 0; y < 8; y++) {
                         Vec2 dropPos = new Vec2(x, y);
                         if (!ACTIVE_GAME.getBoard().occupied(dropPos)) {
                             column.add(dropPos);
@@ -120,8 +120,9 @@ public class RuleLogic {
                     }
                     result.addAll(column);
                 }
-                break;
-            case LANCE:
+                return result;
+            }
+            case LANCE -> {
                 for (int x = 0; x < 9; x++) {
                     for (int y = 0; y < 8; y++) {
                         Vec2 dropPos = new Vec2(x, y);
@@ -130,8 +131,9 @@ public class RuleLogic {
                         }
                     }
                 }
-                break;
-            case KNIGHT:
+                return result;
+            }
+            case KNIGHT -> {
                 for (int x = 0; x < 9; x++) {
                     for (int y = 0; y < 7; y++) {
                         Vec2 dropPos = new Vec2(x, y);
@@ -140,8 +142,9 @@ public class RuleLogic {
                         }
                     }
                 }
-                break;
-            default:
+                return result;
+            }
+            default -> {
                 for (int x = 0; x < 9; x++) {
                     for (int y = 0; y < 9; y++) {
                         Vec2 dropPos = new Vec2(x, y);
@@ -150,9 +153,9 @@ public class RuleLogic {
                         }
                     }
                 }
-                break;
+                return result;
+            }
         }
-        return result;
     }
 
     private static boolean silverGeneral(int xOff, int yOff) {
