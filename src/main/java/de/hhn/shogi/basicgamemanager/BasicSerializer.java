@@ -86,7 +86,7 @@ public class BasicSerializer {
         return BasicSerializer.getSerializer(object.getClass().getName());
     }
 
-    protected static TypeSerializer getSerializer(String class_name) {
+    protected static de.hhn.shogi.basicgamemanager.TypeSerializer getSerializer(String class_name) {
         if (BasicSerializer.serializers.isEmpty()) {
             //registers all serializers
             BasicSerializer.register_serializer(new StringSerializer());

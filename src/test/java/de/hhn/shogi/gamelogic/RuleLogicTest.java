@@ -1,15 +1,17 @@
-package de.hhn.shogi.gamelogic;
+package test.de.hhn.shogi.gamelogic;
 
-import static de.hhn.shogi.gamelogic.Game.ACTIVE_GAME;
+import de.hhn.shogi.gamelogic.Game;
+import de.hhn.shogi.gamelogic.RuleLogic;
 import de.hhn.shogi.gamelogic.util.BoardSide;
 import de.hhn.shogi.gamelogic.util.Vec2;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static de.hhn.shogi.gamelogic.Game.ACTIVE_GAME;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RuleLogicTest {
-
     @BeforeEach
     void setUp() {
         ACTIVE_GAME = new Game(BoardSide.GOTE, BoardSide.GOTE);
@@ -28,7 +30,7 @@ class RuleLogicTest {
             fail("Piece is null");
         }
 
-        assertFalse(RuleLogic.validMove(source, destination1, piece));
+        Assertions.assertFalse(RuleLogic.validMove(source, destination1, piece));
         assertTrue(RuleLogic.validMove(source, destination2, piece));
         assertFalse(RuleLogic.validMove(source, destination3, piece));
     }

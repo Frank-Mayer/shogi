@@ -10,7 +10,7 @@ public class Board {
     // What side gets the Handicap
     public static final BoardSide HANDICAPPED_SIDE = BoardSide.GOTE;
     // Container of all Pieces
-    HashMap<Vec2, Piece> map;
+    HashMap<Vec2, de.hhn.shogi.gamelogic.Piece> map;
     // What side is on the Bottom (point of View)
     BoardSide bottomSide;
     // What side is on the Top

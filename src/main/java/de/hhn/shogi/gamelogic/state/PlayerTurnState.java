@@ -6,7 +6,6 @@ public abstract class PlayerTurnState extends GameState {
     private final BoardSide side;
 
     public PlayerTurnState(BoardSide side) {
-        super();
         this.side = side;
     }
 

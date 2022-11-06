@@ -81,14 +81,14 @@ public class RuleLogic {
     public static Promote promotionStatus(Piece piece, Vec2 pos) {
         if (piece.getSide() == ACTIVE_GAME.getBoard().getBottomSide()) {
             if (pos.getY() >= 6) {
-                if (((piece.getType() == PieceType.PAWN || PieceType.LANCE == piece.getType()) && pos.getY() >= 8) || ((PieceType.KNIGHT == piece.getType()) && pos.getY() >= 7)) {
+                if ((piece.getType() == PieceType.PAWN || PieceType.LANCE == piece.getType()) && pos.getY() >= 8 || PieceType.KNIGHT == piece.getType() && pos.getY() >= 7) {
                     return Promote.MUST;
                 }
                 return Promote.CAN;
             }
         } else {
             if (pos.getY() <= 2) {
-                if (((piece.getType() == PieceType.PAWN || PieceType.LANCE == piece.getType()) && pos.getY() <= 0) || ((PieceType.KNIGHT == piece.getType()) && pos.getY() <= 1)) {
+                if ((piece.getType() == PieceType.PAWN || PieceType.LANCE == piece.getType()) && pos.getY() <= 0 || PieceType.KNIGHT == piece.getType() && pos.getY() <= 1) {
                     return Promote.MUST;
                 }
                 return Promote.CAN;
@@ -267,6 +267,4 @@ public class RuleLogic {
         }
         return false;
     }
-
-
 }

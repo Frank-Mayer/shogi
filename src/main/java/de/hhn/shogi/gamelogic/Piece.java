@@ -4,10 +4,10 @@ import de.hhn.shogi.gamelogic.util.BoardSide;
 import de.hhn.shogi.gamelogic.util.PieceType;
 
 public class Piece {
-    // Current type important for gameLogic
-    private PieceType type;
     // Original type of the Piece. Important for frontend and handLogic
     private final PieceType baseType;
+    // Current type important for gameLogic
+    private PieceType type;
     // Is Piece in promoted state. Important for frontend
     private boolean promoted;
     // Side of Board
@@ -38,6 +38,10 @@ public class Piece {
         return this.side;
     }
 
+    public void setSide(BoardSide side) {
+        this.side = side;
+    }
+
     //Tries to promote the Piece. Returns whether the promotion was done successfully.
     public boolean promote() {
         if (!this.canPromote()) {
@@ -64,10 +68,6 @@ public class Piece {
             case KING, GOLD_GENERAL -> false;
             default -> true;
         };
-    }
-
-    public void setSide(BoardSide side) {
-        this.side = side;
     }
 
     @Override

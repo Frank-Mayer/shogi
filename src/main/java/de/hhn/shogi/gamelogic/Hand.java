@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Hand {
     // Represents all the Pieces this Hand holds
-    private final ArrayList<Piece> pieces = new ArrayList<Piece>();
+    private final ArrayList<Piece> pieces = new ArrayList<>();
 
     // Add a piece to the Hand (and demote it)
     public void addPiece(Piece piece) {
@@ -37,7 +37,7 @@ public class Hand {
     }
 
     public ArrayList<Piece> getPieces() {
-        return pieces;
+        return this.pieces;
     }
 
     public int getHandSize() {

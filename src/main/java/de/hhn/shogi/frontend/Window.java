@@ -1,7 +1,6 @@
 package de.hhn.shogi.frontend;
 
 import de.hhn.shogi.gamelogic.Board;
-import de.hhn.shogi.gamelogic.Hand;
 import de.hhn.shogi.gamelogic.Piece;
 import de.hhn.shogi.gamelogic.Player;
 import de.hhn.shogi.gamelogic.util.BoardSide;
@@ -20,12 +19,11 @@ public class Window extends JFrame {
     JLabel title = new JLabel();
     Map<Vec2, FieldButton> fieldButtons = new HashMap<>();
     Board board;
-    DisplayHand hand1;
-    DisplayHand hand2;
+    de.hhn.shogi.frontend.DisplayHand hand1;
+    de.hhn.shogi.frontend.DisplayHand hand2;
     BoardSide bottom;
 
     public Window(Board board, Player player) {
-        super();
         this.board = board;
         this.bottom = player.getSide();
         //window settings
@@ -44,19 +42,17 @@ public class Window extends JFrame {
         this.getContentPane().add(this.title);
 
         //board
-        new DisplayBoard(this);
+        new de.hhn.shogi.frontend.DisplayBoard(this);
 
         //hand
-        hand2 = new DisplayHand(this, ACTIVE_GAME.getTopPlayer());
-        hand1 = new DisplayHand(this, ACTIVE_GAME.getBottomPlayer());
-
+        this.hand2 = new DisplayHand(this, ACTIVE_GAME.getTopPlayer());
+        this.hand1 = new DisplayHand(this, ACTIVE_GAME.getBottomPlayer());
 
         //makes a FieldButton for every position
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
                 Vec2 pos = new Vec2(x, y);
-                FieldButton button;
-                button = new FieldButton(pos, board.getPiece(pos), this);
+                FieldButton button = new FieldButton(pos, board.getPiece(pos), this);
                 this.fieldButtons.put(pos, button);
             }
         }
@@ -76,19 +72,19 @@ public class Window extends JFrame {
     //adds "legal move" icons on all positions in the List
     public void displayPossibleMoves(ArrayList<Vec2> positions) {
         for (Vec2 pos : positions) {
-            FieldButton b = this.fieldButtons.get(pos);
+            de.hhn.shogi.frontend.FieldButton b = this.fieldButtons.get(pos);
             b.legalMove(true);
         }
     }
 
     //removes all "legal move" icons
     public void removeIcons() {
-        for (FieldButton b : this.fieldButtons.values()) {
+        for (de.hhn.shogi.frontend.FieldButton b : this.fieldButtons.values()) {
             b.legalMove(false);
         }
     }
 
     public void updateHand(Player p) {
-        (p.equals(ACTIVE_GAME.getBottomPlayer()) ? hand1 : hand2).update();
+        (p.equals(ACTIVE_GAME.getBottomPlayer()) ? this.hand1 : this.hand2).update();
     }
 }

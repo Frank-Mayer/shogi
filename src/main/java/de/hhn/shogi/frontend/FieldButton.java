@@ -1,5 +1,7 @@
 package de.hhn.shogi.frontend;
 
+import de.hhn.shogi.frontend.images.ImagePath;
+import de.hhn.shogi.frontend.Window;
 import de.hhn.shogi.gamelogic.Piece;
 import de.hhn.shogi.gamelogic.util.Vec2;
 
@@ -22,40 +24,29 @@ public class FieldButton extends JButton {
     private int translatedX, translatedY;
     private boolean hovering = false, mousePressed = false;
     private boolean legalMoveIcon = false;
-    private boolean isHandButton;
+    private final boolean isHandButton;
 
 
     public FieldButton(Vec2 pos, Piece piece, Window w) {
-        super();
         this.pos = pos;
         this.piece = piece;
         this.window = w;
-        isHandButton = false;
+        this.isHandButton = false;
 
         //init button
-        init();
+        this.init();
     }
 
     public FieldButton(int x, int y, Piece piece, Window w) {
-        super();
         this.pos = null;
         this.piece = piece;
         this.window = w;
-        isHandButton = true;
-        translatedX = x;
-        translatedY = y;
+        this.isHandButton = true;
+        this.translatedX = x;
+        this.translatedY = y;
 
         //init button
-        init();
-    }
-
-    private void init() {
-        setTranslated();
-        this.setContentAreaFilled(false);
-        this.setBounds(this.translatedX, this.translatedY, 75, 75);
-        this.setBorderPainted(false);
-        this.window.add(this, 0);
-        this.addMouseListener(this.mouseListener());
+        this.init();
     }
 
     //rotate a buffered image 90°
@@ -68,23 +59,32 @@ public class FieldButton extends JButton {
         return rotated;
     }
 
+    private void init() {
+        this.setTranslated();
+        this.setContentAreaFilled(false);
+        this.setBounds(this.translatedX, this.translatedY, 75, 75);
+        this.setBorderPainted(false);
+        this.window.add(this, 0);
+        this.addMouseListener(this.mouseListener());
+    }
+
     private void setTranslated() {
-        if (!isHandButton) {
-            translatedX = limit(pos.getX() * 75 + window.getWidth() / 2 - BOARD_SIZE / 2 + 37, 0, window.getWidth());
-            translatedY = limit((8 - pos.getY()) * 75 + window.getHeight() / 2 - BOARD_SIZE / 2 + 37, 0, window.getHeight());
+        if (!this.isHandButton) {
+            this.translatedX = this.limit(this.pos.getX() * 75 + this.window.getWidth() / 2 - BOARD_SIZE / 2 + 37, 0, this.window.getWidth());
+            this.translatedY = this.limit((8 - this.pos.getY()) * 75 + this.window.getHeight() / 2 - BOARD_SIZE / 2 + 37, 0, this.window.getHeight());
         }
     }
 
     public void setTranslated(int x, int y) {
-        translatedY = y;
-        translatedX = x;
+        this.translatedY = y;
+        this.translatedX = x;
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         // calculate position on the screen from shogi coordinates
-        setTranslated();
+        this.setTranslated();
         this.setBounds(this.translatedX, this.translatedY, 75, 75);
 
         //paint piece if Piece is not null
@@ -115,8 +115,8 @@ public class FieldButton extends JButton {
 
     //returns formatted image from path name
     private ImageIcon getImg(String name) {
-        ImageIcon pieceImg = new ImageIcon("src/de/hhn/shogi/frontend/images/" + name);
-        ImageIcon plusImg = new ImageIcon("src/de/hhn/shogi/frontend/images/plus.png");
+        ImageIcon pieceImg = new ImageIcon(ImagePath.getPath(name));
+        ImageIcon plusImg = new ImageIcon(ImagePath.getPath("plus.png"));
         BufferedImage img = new BufferedImage(75, 75, BufferedImage.TYPE_INT_ARGB);
         //create graphics
         Graphics2D imgGraphics = img.createGraphics();
@@ -181,12 +181,12 @@ public class FieldButton extends JButton {
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() == 1) {
                     if (FieldButton.this.mousePressed && FieldButton.this.hovering) {
-                        if(!isHandButton) {
+                        if (!FieldButton.this.isHandButton) {
                             System.out.println(FieldButton.this.pos);
                             ACTIVE_GAME.getState().fieldClick(FieldButton.this.pos);
-                        }else{
-                            System.out.println(piece);
-                            ACTIVE_GAME.getState().handClick(piece);
+                        } else {
+                            System.out.println(FieldButton.this.piece);
+                            ACTIVE_GAME.getState().handClick(FieldButton.this.piece);
                         }
                     }
                     FieldButton.this.mousePressed = false;
@@ -203,8 +203,8 @@ public class FieldButton extends JButton {
         this.piece = piece;
     }
 
-    public boolean hasPiece(){
-        return piece != null;
+    public boolean hasPiece() {
+        return this.piece != null;
     }
 
     public void legalMove(boolean addOrRemove) {
