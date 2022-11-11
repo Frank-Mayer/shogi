@@ -1,9 +1,11 @@
 package de.hhn.shogi.frontend;
 
+import de.hhn.shogi.frontend.images.ImagePath;
 import de.hhn.shogi.gamelogic.Board;
 import de.hhn.shogi.gamelogic.Piece;
 import de.hhn.shogi.gamelogic.Player;
 import de.hhn.shogi.gamelogic.util.BoardSide;
+import de.hhn.shogi.gamelogic.util.PieceType;
 import de.hhn.shogi.gamelogic.util.Vec2;
 
 import javax.swing.*;
@@ -28,11 +30,11 @@ public class Window extends JFrame {
         this.bottom = player.getSide();
         //window settings
         this.setTitle("Shogi");
-        this.setExtendedState(Frame.MAXIMIZED_BOTH);
         this.setSize(1600, 1000);
         this.setLayout(null);
         this.getContentPane().setBackground(new Color(50, 40, 50));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setIconImage(new ImageIcon(ImagePath.getPath("board.png")).getImage());
 
         //title text
         this.title.setText("Shogi");
@@ -42,7 +44,7 @@ public class Window extends JFrame {
         this.getContentPane().add(this.title);
 
         //board
-        new de.hhn.shogi.frontend.DisplayBoard(this);
+        new DisplayBoard(this);
 
         //hand
         this.hand2 = new DisplayHand(this, ACTIVE_GAME.getTopPlayer());
@@ -56,6 +58,7 @@ public class Window extends JFrame {
                 this.fieldButtons.put(pos, button);
             }
         }
+        this.setVisible(true);
     }
 
     //updated every time the window is resized
@@ -86,5 +89,10 @@ public class Window extends JFrame {
 
     public void updateHand(Player p) {
         (p.equals(ACTIVE_GAME.getBottomPlayer()) ? this.hand1 : this.hand2).update();
+    }
+
+    public void showConfirmationPanel(Piece piece) {
+        new ConfirmationWindow(this, piece);
+        this.setEnabled(false);
     }
 }

@@ -12,7 +12,6 @@ public class Main {
     public static void main(String[] args) {
         ACTIVE_GAME = new Game(BoardSide.GOTE, BoardSide.GOTE);
         Main.MAIN_WINDOW = new Window(ACTIVE_GAME.getBoard(), ACTIVE_GAME.getBottomPlayer());
-        Main.MAIN_WINDOW.setVisible(true);
     }
 
     public static Window getMainWindow() {

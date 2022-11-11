@@ -144,17 +144,7 @@ public class FieldButton extends JButton {
 
     //select image based on PieceType
     public String getPathName() {
-        return switch (this.piece.getBaseType()) {
-            case LANCE -> "lance.png";
-            case KNIGHT -> "knight.png";
-            case BISHOP, HORSE -> "bishop.png";
-            case KING -> "king.png";
-            case ROOK, DRAGON -> "rook.png";
-            case PAWN -> "pawn.png";
-            case GOLD_GENERAL -> "gold_general.png";
-            case SILVER_GENERAL -> "silver_general.png";
-            default -> "blank.png";
-        };
+        return ImagePath.getPieceImage(this.piece.getBaseType());
     }
 
     private MouseListener mouseListener() {
@@ -184,6 +174,7 @@ public class FieldButton extends JButton {
                         if (!FieldButton.this.isHandButton) {
                             System.out.println(FieldButton.this.pos);
                             ACTIVE_GAME.getState().fieldClick(FieldButton.this.pos);
+                           if(piece != null) window.showConfirmationPanel(piece);
                         } else {
                             System.out.println(FieldButton.this.piece);
                             ACTIVE_GAME.getState().handClick(FieldButton.this.piece);

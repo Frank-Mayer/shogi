@@ -10,5 +10,21 @@ public enum PieceType {
     PAWN,
     ROOK,
     DRAGON,
-    SILVER_GENERAL
+    SILVER_GENERAL;
+
+    @Override
+    public String toString() {
+        return switch (this) {
+            case BISHOP -> "Bishop";
+            case HORSE -> "Horse";
+            case GOLD_GENERAL -> "Gold General";
+            case KING -> "King";
+            case KNIGHT -> "Knight";
+            case LANCE -> "Lance";
+            case PAWN -> "Pawn";
+            case ROOK -> "Rook";
+            case DRAGON -> "Dragon";
+            case SILVER_GENERAL -> "Silver General";
+        };
+    }
 }
