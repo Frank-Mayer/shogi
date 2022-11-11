@@ -100,62 +100,32 @@ public class RuleLogic {
     //returns all possible positions you can drop your piece
     public static ArrayList<Vec2> getAllPossibleDrops(Piece piece) {
         ArrayList<Vec2> result = new ArrayList<>();
-
-        switch (piece.getType()) {
-            case PAWN -> {
-                for (int x = 0; x < 9; x++) {
-                    ArrayList<Vec2> column = new ArrayList<>();
-                    for (int y = 0; y < 8; y++) {
-                        Vec2 dropPos = new Vec2(x, y);
-                        if (!ACTIVE_GAME.getBoard().occupied(dropPos)) {
-                            column.add(dropPos);
-                        } else {
-                            //test if column contains pawn -> if yes: clear column
-                            Piece occupyingPiece = ACTIVE_GAME.getBoard().getPiece(dropPos);
-                            if (occupyingPiece.getType() == PieceType.PAWN && !occupyingPiece.isPromoted() && occupyingPiece.getSide() == piece.getSide()) {
-                                column.clear();
-                                break;
-                            }
-                        }
-                    }
-                    result.addAll(column);
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                Vec2 pos = new Vec2(x, y);
+                if (RuleLogic.validDrop(pos, piece)) {
+                    result.add(pos);
                 }
-                return result;
-            }
-            case LANCE -> {
-                for (int x = 0; x < 9; x++) {
-                    for (int y = 0; y < 8; y++) {
-                        Vec2 dropPos = new Vec2(x, y);
-                        if (!ACTIVE_GAME.getBoard().occupied(dropPos)) {
-                            result.add(dropPos);
-                        }
-                    }
-                }
-                return result;
-            }
-            case KNIGHT -> {
-                for (int x = 0; x < 9; x++) {
-                    for (int y = 0; y < 7; y++) {
-                        Vec2 dropPos = new Vec2(x, y);
-                        if (!ACTIVE_GAME.getBoard().occupied(dropPos)) {
-                            result.add(dropPos);
-                        }
-                    }
-                }
-                return result;
-            }
-            default -> {
-                for (int x = 0; x < 9; x++) {
-                    for (int y = 0; y < 9; y++) {
-                        Vec2 dropPos = new Vec2(x, y);
-                        if (!ACTIVE_GAME.getBoard().occupied(dropPos)) {
-                            result.add(dropPos);
-                        }
-                    }
-                }
-                return result;
             }
         }
+        return result;
+    }
+
+    //is it a valid drop?
+    private static boolean validDrop(Vec2 pos, Piece piece) {
+        if (ACTIVE_GAME.getBoard().getPiece(pos) != null) return false;
+        if (getAllPossibleMoves(pos, piece).size() == 0) return false;
+        if(piece.getType() == PieceType.PAWN){
+            for(int y = 0; y < 9; y++){
+                Piece pieceOnField = ACTIVE_GAME.getBoard().getPiece(new Vec2(pos.getX(), y));
+                if(pieceOnField != null){
+                    if(pieceOnField.getType() == PieceType.PAWN && pieceOnField.getSide() == piece.getSide()){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     private static boolean silverGeneral(int xOff, int yOff) {
